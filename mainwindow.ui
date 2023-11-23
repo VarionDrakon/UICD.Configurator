@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,20 +14,26 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>UBC ModBus Configurator</string>
+  </property>
+  <property name="locale">
+   <locale language="English" country="UnitedStates"/>
+  </property>
+  <property name="documentMode">
+   <bool>false</bool>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QComboBox" name="cmbx_ListSerialPorts">
     <property name="geometry">
      <rect>
-      <x>190</x>
-      <y>210</y>
-      <width>80</width>
-      <height>21</height>
+      <x>10</x>
+      <y>10</y>
+      <width>131</width>
+      <height>22</height>
      </rect>
     </property>
-    <property name="text">
-     <string>PushButton</string>
+    <property name="sizeAdjustPolicy">
+     <enum>QComboBox::AdjustToMinimumContentsLengthWithIcon</enum>
     </property>
    </widget>
   </widget>

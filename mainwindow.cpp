@@ -13,3 +13,6 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::UpdateListCOMPorts(){
+    int index = ui ->cmbx_ListSerialPorts->currentIndex();
+}

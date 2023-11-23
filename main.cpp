@@ -1,5 +1,5 @@
 #include "mainwindow.h"
-
+//Includes files from lib`s
 #include <QApplication>
 #include <QLocale>
 #include <QTranslator>

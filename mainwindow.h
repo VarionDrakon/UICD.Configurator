@@ -17,5 +17,6 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    void UpdateListCOMPorts();
 };
 #endif // MAINWINDOW_H
