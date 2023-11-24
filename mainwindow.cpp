@@ -1,11 +1,15 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+//Libs included
+#include <QDebug>
+#include <QtSerialPort/QSerialPortInfo>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    UpdateListCOMPorts();
 }
 
 MainWindow::~MainWindow()
@@ -14,5 +18,8 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::UpdateListCOMPorts(){
-    int index = ui ->cmbx_ListSerialPorts->currentIndex();
+    const auto serialPortInfos = QSerialPortInfo::availablePorts();
+    for(const QSerialPortInfo &portInfo : serialPortInfos){
+        qDebug() << portInfo.portName();
+    }  
 }

@@ -14,9 +14,9 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    void UpdateListCOMPorts();
 
 private:
     Ui::MainWindow *ui;
-    void UpdateListCOMPorts();
 };
 #endif // MAINWINDOW_H
