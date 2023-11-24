@@ -16,6 +16,9 @@ public:
     ~MainWindow();
     void UpdateListCOMPorts();
 
+private slots:
+    void on_pushButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 };
