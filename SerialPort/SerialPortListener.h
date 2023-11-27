@@ -2,6 +2,9 @@
 #include "ui_mainwindow.h"
 #include <QDebug>
 #include <QSerialPortInfo>
+#include <QModbusRtuSerialMaster>
+
+QModbusClient *modbusDevice;
 
 void MainWindow::UpdateListCOMPorts(){
     const auto serialPortInfos = QSerialPortInfo::availablePorts();
@@ -10,4 +13,8 @@ void MainWindow::UpdateListCOMPorts(){
         qDebug() << portInfo.portName();
         ui->cmbx_ListSerialPorts->addItem(portInfo.portName());
     }
+}
+
+void functionModBus(){
+
 }
