@@ -13,6 +13,7 @@ SOURCES += \
     mainwindow.cpp
 
 HEADERS += \
+    SerialPort/SerialPortListener.h \
     mainwindow.h
 
 FORMS += \
