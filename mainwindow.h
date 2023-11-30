@@ -15,11 +15,11 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     void UpdateListCOMPorts();
-    void on_pushButton_clicked();
 
 private slots:
     void ResponseModbusDevice();
     void ConnectedModbusDevice();
+    void on_btn_scaningExistSerialPorts_clicked();
 
 private:
     Ui::MainWindow *ui;

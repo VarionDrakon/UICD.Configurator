@@ -42,7 +42,7 @@
      <enum>QComboBox::AdjustToMinimumContentsLengthWithIcon</enum>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="btn_scaningExistSerialPorts">
     <property name="geometry">
      <rect>
       <x>260</x>

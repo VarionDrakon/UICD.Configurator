@@ -8,7 +8,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ConnectedModbusDevice();
+    //ConnectedModbusDevice();
 }
 
 MainWindow::~MainWindow()
@@ -16,8 +16,9 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_pushButton_clicked()
+void MainWindow::on_btn_scaningExistSerialPorts_clicked()
 {
     //UpdateListCOMPorts();
     ConnectedModbusDevice();
 }
+

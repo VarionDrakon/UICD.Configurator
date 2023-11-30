@@ -42,7 +42,23 @@ void MainWindow::ConnectedModbusDevice(){
 
     if (auto *reply = modbusMaster->sendReadRequest(readUnit, deviceAddress)) {
         if (!reply->isFinished()) {
-            connect(reply, &QModbusReply::finished, this, &MainWindow::ResponseModbusDevice);
+            connect(reply, &QModbusReply::finished, [=](){
+
+                if (!reply)
+                    return;
+
+                if (reply->error() == QModbusDevice::NoError) {
+                    const QModbusDataUnit data = reply->result();
+                    for (int i = 0; i < data.valueCount(); i++) {
+                        qDebug() << "Value:" << data.value(i);
+                    }
+                } else if (reply->error() == QModbusDevice::ProtocolError) {
+                    qDebug() << "Modbus protocol error:" << reply->errorString();
+                } else {
+                    qDebug() << "Modbus reply error:" << reply->errorString();
+                }
+                reply->deleteLater();
+            });
         }
         else{
             delete reply;
@@ -53,20 +69,7 @@ void MainWindow::ConnectedModbusDevice(){
 }
 
 void MainWindow::ResponseModbusDevice(){
-    auto reply = qobject_cast<QModbusReply *>(sender());
+    //auto reply = qobject_cast<QModbusReply *>(sender());
 
-    if (!reply)
-        return;
 
-    if (reply->error() == QModbusDevice::NoError) {
-        const QModbusDataUnit data = reply->result();
-        for (int i = 0; i < data.valueCount(); i++) {
-            qDebug() << "Value:" << data.value(i);
-        }
-    } else if (reply->error() == QModbusDevice::ProtocolError) {
-        qDebug() << "Modbus protocol error:" << reply->errorString();
-    } else {
-        qDebug() << "Modbus reply error:" << reply->errorString();
-    }
-    reply->deleteLater();
 }
