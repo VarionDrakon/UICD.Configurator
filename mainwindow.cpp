@@ -18,7 +18,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_btn_scaningExistSerialPorts_clicked()
 {
-    //UpdateListCOMPorts();
+    UpdateListCOMPorts();
     ConnectedModbusDevice();
 }
 
