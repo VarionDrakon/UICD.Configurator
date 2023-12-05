@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <QDebug>
 #include <QSerialPortInfo>
 #include <QModbusDataUnit>
 #include <QModbusDevice>
@@ -12,10 +11,9 @@ QModbusRtuSerialClient *modbusMaster = new QModbusRtuSerialClient();
 
 void MainWindow::UpdateListCOMPorts(){
     const auto serialPortInfos = QSerialPortInfo::availablePorts();
-    ui->cmbx_ListSerialPorts->clear();
+    ui->cmbx_listSerialPorts->clear();
     for(const QSerialPortInfo &portInfo : serialPortInfos){
-        qDebug() << portInfo.portName();
-        ui->cmbx_ListSerialPorts->addItem(portInfo.portName());
+        ui->cmbx_listSerialPorts->addItem(portInfo.portName());
     }
 }
 
@@ -28,34 +26,30 @@ void MainWindow::ConnectedModbusDevice(){
     modbusMaster->setTimeout(100);
     modbusMaster->setNumberOfRetries(3);
 
-    if (!modbusMaster->connectDevice()){
-        qDebug()<< "Error connected!" << modbusMaster->errorString();
-        //modbusMaster->disconnectDevice();
-        //delete modbusMaster;
-    }
-
     int deviceAddress = 10;
     int startRegisterAddress = 0;
     int countReadRegister = 2;
 
     QModbusDataUnit readUnit(QModbusDataUnit::HoldingRegisters, startRegisterAddress, countReadRegister);
 
+    if (!modbusMaster->connectDevice()){
+        ui->txtbrw_logBrowser->append("Error connected! - Device not found or not connected.");
+        return;
+    }
     if (auto *reply = modbusMaster->sendReadRequest(readUnit, deviceAddress)) {
         if (!reply->isFinished()) {
             connect(reply, &QModbusReply::finished, [=](){
-
                 if (!reply)
                     return;
-
                 if (reply->error() == QModbusDevice::NoError) {
                     const QModbusDataUnit data = reply->result();
                     for (int i = 0; i < data.valueCount(); i++) {
-                        qDebug() << "Value:" << data.value(i);
+                        ui->txtbrw_logBrowser->append(QString::number(data.value(i)));
                     }
                 } else if (reply->error() == QModbusDevice::ProtocolError) {
-                    qDebug() << "Modbus protocol error:" << reply->errorString();
+                    ui->txtbrw_logBrowser->append("Modbus protocol error:" + reply->errorString());
                 } else {
-                    qDebug() << "Modbus reply error:" << reply->errorString();
+                    ui->txtbrw_logBrowser->append("Modbus reply error:" + reply->errorString());
                 }
                 reply->deleteLater();
             });
@@ -63,13 +57,15 @@ void MainWindow::ConnectedModbusDevice(){
         else{
             delete reply;
         }
-    } else {
-        qDebug() << "Failed to send Modbus request:" << modbusMaster->errorString();
+    }
+    else {
+        ui->txtbrw_logBrowser->append("Failed to send Modbus request: " + modbusMaster->errorString());
+        modbusMaster->disconnectDevice();
+        //delete modbusMaster;
     }
 }
 
 void MainWindow::ResponseModbusDevice(){
     //auto reply = qobject_cast<QModbusReply *>(sender());
-
 
 }

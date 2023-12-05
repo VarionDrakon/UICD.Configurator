@@ -21,6 +21,8 @@ private slots:
     void ConnectedModbusDevice();
     void on_btn_scaningExistSerialPorts_clicked();
 
+    void on_btn_readChooserDevice_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

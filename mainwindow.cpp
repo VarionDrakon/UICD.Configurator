@@ -8,7 +8,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    //ConnectedModbusDevice();
+    ui->txtbrw_logBrowser->setReadOnly(true);
 }
 
 MainWindow::~MainWindow()
@@ -19,6 +19,11 @@ MainWindow::~MainWindow()
 void MainWindow::on_btn_scaningExistSerialPorts_clicked()
 {
     UpdateListCOMPorts();
+}
+
+
+void MainWindow::on_btn_readChooserDevice_clicked()
+{
     ConnectedModbusDevice();
 }
 

@@ -9,15 +9,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1019</width>
-    <height>660</height>
+    <width>1002</width>
+    <height>697</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>UBC ModBus Configurator</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(80, 80, 80);</string>
+   <string notr="true">background-color: rgb(40, 40, 40);</string>
   </property>
   <property name="locale">
    <locale language="English" country="UnitedStates"/>
@@ -26,11 +26,73 @@
    <bool>false</bool>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <widget class="QTextBrowser" name="txtbrw_logBrowser">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>490</y>
+      <width>921</width>
+      <height>141</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string/>
+    </property>
+    <property name="statusTip">
+     <string/>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(83, 83, 83);
+color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="html">
+     <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+    <property name="openExternalLinks">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QListWidget" name="listWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>370</x>
+      <y>210</y>
+      <width>561</width>
+      <height>271</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(83, 83, 83);</string>
+    </property>
+   </widget>
+   <widget class="QTreeView" name="treeView">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>210</y>
+      <width>351</width>
+      <height>271</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(83, 83, 83);</string>
+    </property>
+   </widget>
    <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
-      <x>70</x>
-      <y>50</y>
+      <x>10</x>
+      <y>0</y>
       <width>351</width>
       <height>201</height>
      </rect>
@@ -39,7 +101,7 @@
      <item row="0" column="0">
       <layout class="QGridLayout" name="grid_TableTextModbusConfig">
        <item row="0" column="0">
-        <widget class="QLabel" name="label">
+        <widget class="QLabel" name="label_serialPort">
          <property name="styleSheet">
           <string notr="true">color: rgb(255, 255, 255);</string>
          </property>
@@ -49,7 +111,7 @@
         </widget>
        </item>
        <item row="1" column="0">
-        <widget class="QLabel" name="label_2">
+        <widget class="QLabel" name="label_baudRate">
          <property name="styleSheet">
           <string notr="true">color: rgb(255, 255, 255);</string>
          </property>
@@ -59,7 +121,7 @@
         </widget>
        </item>
        <item row="2" column="0">
-        <widget class="QLabel" name="label_3">
+        <widget class="QLabel" name="label_dataBits">
          <property name="styleSheet">
           <string notr="true">color: rgb(255, 255, 255);</string>
          </property>
@@ -69,7 +131,7 @@
         </widget>
        </item>
        <item row="3" column="0">
-        <widget class="QLabel" name="label_4">
+        <widget class="QLabel" name="label_stopBits">
          <property name="styleSheet">
           <string notr="true">color: rgb(255, 255, 255);</string>
          </property>
@@ -79,7 +141,7 @@
         </widget>
        </item>
        <item row="4" column="0">
-        <widget class="QLabel" name="label_5">
+        <widget class="QLabel" name="label_parity">
          <property name="styleSheet">
           <string notr="true">color: rgb(255, 255, 255);</string>
          </property>
@@ -89,7 +151,7 @@
         </widget>
        </item>
        <item row="5" column="0">
-        <widget class="QLabel" name="label_6">
+        <widget class="QLabel" name="label_slaveID">
          <property name="styleSheet">
           <string notr="true">color: rgb(255, 255, 255);</string>
          </property>
@@ -103,7 +165,7 @@
      <item row="0" column="1">
       <layout class="QGridLayout" name="grid_TableButtonModbusConfig">
        <item row="0" column="0">
-        <widget class="QComboBox" name="cmbx_ListSerialPorts">
+        <widget class="QComboBox" name="cmbx_listSerialPorts">
          <property name="styleSheet">
           <string notr="true"/>
          </property>
@@ -113,19 +175,19 @@
         </widget>
        </item>
        <item row="1" column="0">
-        <widget class="QComboBox" name="comboBox"/>
+        <widget class="QComboBox" name="cmbx_listBaudrate"/>
        </item>
        <item row="2" column="0">
-        <widget class="QComboBox" name="comboBox_2"/>
+        <widget class="QComboBox" name="cmbx_listDataBits"/>
        </item>
        <item row="3" column="0">
-        <widget class="QComboBox" name="comboBox_3"/>
+        <widget class="QComboBox" name="cmbx_listStopBits"/>
        </item>
        <item row="4" column="0">
-        <widget class="QComboBox" name="comboBox_4"/>
+        <widget class="QComboBox" name="cmbx_listParity"/>
        </item>
        <item row="5" column="0">
-        <widget class="QSpinBox" name="spinBox">
+        <widget class="QSpinBox" name="spnbx_listSlaveID">
          <property name="maximum">
           <number>255</number>
          </property>
@@ -146,14 +208,14 @@
         </widget>
        </item>
        <item row="1" column="0">
-        <widget class="QPushButton" name="btn_readChooser">
+        <widget class="QPushButton" name="btn_readChooserDevice">
          <property name="text">
           <string>Read Device</string>
          </property>
         </widget>
        </item>
        <item row="2" column="0">
-        <widget class="QPushButton" name="pushButton_3">
+        <widget class="QPushButton" name="btn_writeChooserDevice">
          <property name="text">
           <string>Write Device</string>
          </property>
@@ -169,7 +231,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1019</width>
+     <width>1002</width>
      <height>21</height>
     </rect>
    </property>
