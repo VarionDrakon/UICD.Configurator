@@ -88,7 +88,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
      <string notr="true">background-color: rgb(83, 83, 83);</string>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -175,19 +175,38 @@ li.checked::marker { content: &quot;\2612&quot;; }
         </widget>
        </item>
        <item row="1" column="0">
-        <widget class="QComboBox" name="cmbx_listBaudrate"/>
+        <widget class="QComboBox" name="cmbx_listBaudrate">
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
+        </widget>
        </item>
        <item row="2" column="0">
-        <widget class="QComboBox" name="cmbx_listDataBits"/>
+        <widget class="QComboBox" name="cmbx_listDataBits">
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
+        </widget>
        </item>
        <item row="3" column="0">
-        <widget class="QComboBox" name="cmbx_listStopBits"/>
+        <widget class="QComboBox" name="cmbx_listStopBits">
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
+        </widget>
        </item>
        <item row="4" column="0">
-        <widget class="QComboBox" name="cmbx_listParity"/>
+        <widget class="QComboBox" name="cmbx_listParity">
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
+        </widget>
        </item>
        <item row="5" column="0">
         <widget class="QSpinBox" name="spnbx_listSlaveID">
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
          <property name="maximum">
           <number>255</number>
          </property>
