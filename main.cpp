@@ -3,11 +3,15 @@
 #include <QApplication>
 #include <QLocale>
 #include <QTranslator>
-#include <QDebug>
+#include <QFile>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    QFile styleFile( ":qss/stylesheet_mainwindows.qss" );
+    styleFile.open( QFile::ReadOnly );
+    a.setStyleSheet( QString::fromLatin1( styleFile.readAll() ) );
+    styleFile.close();
     QTranslator translator;
     const QStringList uiLanguages = QLocale::system().uiLanguages();
     for (const QString &locale : uiLanguages) {

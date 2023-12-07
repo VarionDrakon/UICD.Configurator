@@ -45,8 +45,7 @@
      <bool>false</bool>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(83, 83, 83);
-color: rgb(255, 255, 255);</string>
+     <string notr="true"/>
     </property>
     <property name="html">
      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -72,7 +71,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(83, 83, 83);</string>
+     <string notr="true"/>
     </property>
    </widget>
    <widget class="QTreeView" name="treeView">
@@ -85,7 +84,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(83, 83, 83);</string>
+     <string notr="true"/>
     </property>
    </widget>
    <widget class="QWidget" name="layoutWidget">
@@ -103,7 +102,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
        <item row="0" column="0">
         <widget class="QLabel" name="label_serialPort">
          <property name="styleSheet">
-          <string notr="true">color: rgb(255, 255, 255);</string>
+          <string notr="true"/>
          </property>
          <property name="text">
           <string>Serial port:</string>
@@ -113,7 +112,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
        <item row="1" column="0">
         <widget class="QLabel" name="label_baudRate">
          <property name="styleSheet">
-          <string notr="true">color: rgb(255, 255, 255);</string>
+          <string notr="true"/>
          </property>
          <property name="text">
           <string>Baud</string>
@@ -123,7 +122,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
        <item row="2" column="0">
         <widget class="QLabel" name="label_dataBits">
          <property name="styleSheet">
-          <string notr="true">color: rgb(255, 255, 255);</string>
+          <string notr="true"/>
          </property>
          <property name="text">
           <string>Data bits</string>
@@ -143,7 +142,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
        <item row="4" column="0">
         <widget class="QLabel" name="label_parity">
          <property name="styleSheet">
-          <string notr="true">color: rgb(255, 255, 255);</string>
+          <string notr="true"/>
          </property>
          <property name="text">
           <string>Parity</string>
