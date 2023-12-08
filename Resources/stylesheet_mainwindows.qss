@@ -13,17 +13,13 @@ QMainWindow {
 QPushButton {
     color: rgb(197, 198, 199);
     background-color: rgb(11, 12, 16);
-    border-color: rgb(69, 162, 158);
-    border-width: 1px;
-    border-style: solid;
+    border: 1px solid rgb(69, 162, 158);
     border-radius: 4px;
 }
 QPushButton:hover, QPushButton:active {
     color: rgb(197, 198, 199);
     background-color: rgb(11, 12, 16);
-    border-color: rgb(69, 162, 158);
-    border-width: 1px;
-    border-style: solid;
+    border: 1px solid rgb(69, 162, 158);
     border-radius: 4px;
 }
 
@@ -36,10 +32,23 @@ QSpinBox, QSpinBox:hover, QSpinBox:active {
     color: rgb(197, 198, 199);
     background-color: rgb(11, 12, 16);
     selection-background-color: rgb(31, 40, 51);
+    border: 1px solid rgb(69, 162, 158);
+    border-radius: 4px;
 }
-
+QComboBox::drop-down 
+{
+    color: rgb(102, 252, 241);
+    background-color: rgb(102, 252, 241);
+}
+QComboBox QAbstractItemView {
+    color: rgb(197, 198, 199);
+    background-color: rgb(11, 12, 16);
+    selection-background-color: rgb(31, 40, 51);
+}
 QComboBox, QComboBox:hover, QComboBox:active {
     color: rgb(197, 198, 199);
+    border: 1px solid rgb(69, 162, 158);
+    border-radius: 3px;
     background-color: rgb(11, 12, 16);
     selection-background-color: rgb(31, 40, 51);
 }
@@ -48,8 +57,6 @@ QListWidget, QTreeView, QTextBrowser{
     color: rgb(197, 198, 199);
     background-color: rgb(11, 12, 16);
     selection-background-color: rgb(31, 40, 51);
-    border-color: rgb(69, 162, 158);
-    border-width: 1px;
-    border-style: solid;
+    border: 1px solid rgb(69, 162, 158);
     border-radius: 4px;
 }
