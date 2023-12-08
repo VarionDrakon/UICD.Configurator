@@ -17,7 +17,7 @@
    <string>UBC ModBus Configurator</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(40, 40, 40);</string>
+   <string notr="true"/>
   </property>
   <property name="locale">
    <locale language="English" country="UnitedStates"/>
@@ -220,6 +220,9 @@ li.checked::marker { content: &quot;\2612&quot;; }
       <layout class="QGridLayout" name="grid_TableRWButtonModbusConfig">
        <item row="0" column="0">
         <widget class="QPushButton" name="btn_scaningExistSerialPorts">
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
          <property name="text">
           <string>Rescan</string>
          </property>
