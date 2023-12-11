@@ -5,21 +5,24 @@
 #include <QModbusDevice>
 #include <QModbusRtuSerialMaster>
 #include <QSerialPort>
-
 //Create object ModBus RTU masters
 QModbusRtuSerialClient *modbusMaster = new QModbusRtuSerialClient();
 
 void MainWindow::UpdateListCOMPorts(){
     const auto serialPortInfos = QSerialPortInfo::availablePorts();
     ui->cmbx_listSerialPorts->clear();
+    if(serialPortParameters.size() >= 1){
+       serialPortParameters.clear();
+    }
     for(const QSerialPortInfo &portInfo : serialPortInfos){
         ui->cmbx_listSerialPorts->addItem(portInfo.portName());
+        serialPortParameters.append(portInfo.portName());
     }
 }
 
 void MainWindow::ConnectedModbusDevice(){
-    modbusMaster->setConnectionParameter(QModbusDevice::SerialPortNameParameter, "COM8");
-    modbusMaster->setConnectionParameter(QModbusDevice::SerialBaudRateParameter, QSerialPort::Baud9600);
+    modbusMaster->setConnectionParameter(QModbusDevice::SerialPortNameParameter, "COM9");
+    modbusMaster->setConnectionParameter(QModbusDevice::SerialBaudRateParameter, baudrate);
     modbusMaster->setConnectionParameter(QModbusDevice::SerialDataBitsParameter, QSerialPort::Data8);
     modbusMaster->setConnectionParameter(QModbusDevice::SerialStopBitsParameter, QSerialPort::OneStop);
     modbusMaster->setConnectionParameter(QModbusDevice::SerialParityParameter, QSerialPort::NoParity);
@@ -45,10 +48,13 @@ void MainWindow::ConnectedModbusDevice(){
                     const QModbusDataUnit data = reply->result();
                     for (int i = 0; i < data.valueCount(); i++) {
                         ui->txtbrw_logBrowser->append(QString::number(data.value(i)));
+                        modbusMaster->disconnectDevice();
                     }
-                } else if (reply->error() == QModbusDevice::ProtocolError) {
+                }
+                else if (reply->error() == QModbusDevice::ProtocolError) {
                     ui->txtbrw_logBrowser->append("Modbus protocol error:" + reply->errorString());
-                } else {
+                }
+                else {
                     ui->txtbrw_logBrowser->append("Modbus reply error:" + reply->errorString());
                 }
                 reply->deleteLater();
