@@ -11,12 +11,14 @@ QModbusRtuSerialClient *modbusMaster = new QModbusRtuSerialClient();
 void MainWindow::UpdateListCOMPorts(){
     const auto serialPortInfos = QSerialPortInfo::availablePorts();
     ui->cmbx_listSerialPorts->clear();
-    if(serialPortParameters.size() >= 1){
-       serialPortParameters.clear();
+    if(serialPortParametersList.isEmpty()){
+        serialPortParametersList.clear();
     }
     for(const QSerialPortInfo &portInfo : serialPortInfos){
         ui->cmbx_listSerialPorts->addItem(portInfo.portName());
-        serialPortParameters.append(portInfo.portName());
+        serialPortParametersList.append(portInfo.portName());
+        //qDebug() << serialPortParameters.indexOf(portInfo.portName().size());
+        ui->txtbrw_logBrowser->append(serialPortParametersList.last());
     }
 }
 

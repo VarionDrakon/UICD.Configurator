@@ -17,8 +17,10 @@ public:
     ~MainWindow();
     void UpdateListCOMPorts();
     void LocalParametersInitilizatedOnStartup();
+    void ResponseModbusDevice();
+    void ConnectedModbusDevice();
 
-    const QList<QSerialPort::BaudRate> baudrateParameters = QList<QSerialPort::BaudRate>()
+    const QList<QSerialPort::BaudRate> baudrateParametersList = QList<QSerialPort::BaudRate>()
         << QSerialPort::Baud1200
         << QSerialPort::Baud2400
         << QSerialPort::Baud4800
@@ -28,11 +30,13 @@ public:
         << QSerialPort::Baud57600
         << QSerialPort::Baud115200;
 
-    QList<QString> serialPortParameters;
+    QList<QString> serialPortParametersList;
+
+signals:
+    //void interfaceLoaded();
 
 private slots:
-    void ResponseModbusDevice();
-    void ConnectedModbusDevice();
+    //void successInterfaceLoaded();
     void on_btn_scaningExistSerialPorts_clicked();
 
     void on_btn_readChooserDevice_clicked();
@@ -46,5 +50,6 @@ private:
 
     int baudrate;
     QString nameSerialPort;
+    bool isAppSucessStartup = false;
 };
 #endif // MAINWINDOW_H
