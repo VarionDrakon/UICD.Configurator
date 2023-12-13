@@ -14,15 +14,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     ui->txtbrw_logBrowser->setReadOnly(true);
 
-    //emit interfaceLoaded();
-
     LocalParametersInitilizatedOnStartup();
-    //MainWindow mainWindow;
-    //connect(&mainWindow, &MainWindow::interfaceLoaded, &mainWindow, &MainWindow::successInterfaceLoaded);
-    isAppSucessStartup = true;
-    if(isAppSucessStartup){
-        UpdateListCOMPorts();
-    }
+
+    UpdateListCOMPorts();
 }
 
 MainWindow::~MainWindow()
@@ -47,15 +41,15 @@ void MainWindow::LocalParametersInitilizatedOnStartup()
     {
         ui->cmbx_listBaudrate->addItem(QString::number(baudrate));
     }
+
+    ui->cmbx_listSerialPorts->setCurrentIndex(0);
 }
 
 void MainWindow::on_cmbx_listSerialPorts_currentIndexChanged(int index)
 {
-    //ui->txtbrw_logBrowser->append("Current serial ports: " + QString::number(index));
-    //nameSerialPort = serialPortParameters[index];
-    //qDebug() << serialPortParametersList.last();
+        ui->txtbrw_logBrowser->append("Reacted!!!");
+        //nameSerialPort = serialPortParametersList[index];
 }
-
 
 void MainWindow::on_cmbx_listBaudrate_currentIndexChanged(int index)
 {

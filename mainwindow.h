@@ -33,10 +33,8 @@ public:
     QList<QString> serialPortParametersList;
 
 signals:
-    //void interfaceLoaded();
 
 private slots:
-    //void successInterfaceLoaded();
     void on_btn_scaningExistSerialPorts_clicked();
 
     void on_btn_readChooserDevice_clicked();
@@ -50,6 +48,5 @@ private:
 
     int baudrate;
     QString nameSerialPort;
-    bool isAppSucessStartup = false;
 };
 #endif // MAINWINDOW_H
