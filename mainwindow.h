@@ -20,7 +20,7 @@ public:
     void ResponseModbusDevice();
     void ConnectedModbusDevice();
 
-    const QList<QSerialPort::BaudRate> baudrateParametersList = QList<QSerialPort::BaudRate>()
+    const QList<QSerialPort::BaudRate> parametersListBaudrate = QList<QSerialPort::BaudRate>()
         << QSerialPort::Baud1200
         << QSerialPort::Baud2400
         << QSerialPort::Baud4800
@@ -29,10 +29,25 @@ public:
         << QSerialPort::Baud38400
         << QSerialPort::Baud57600
         << QSerialPort::Baud115200;
+    const QList<QSerialPort::DataBits> parametersListDataBits = QList<QSerialPort::DataBits>()
+        << QSerialPort::Data5
+        << QSerialPort::Data6
+        << QSerialPort::Data7
+        << QSerialPort::Data8;
+    const QList<QSerialPort::StopBits> parametersListStopBits = QList<QSerialPort::StopBits>()
+        << QSerialPort::OneStop
+        << QSerialPort::TwoStop;
+    const QList<QSerialPort::Parity> parametersListParity = QList<QSerialPort::Parity>()
+        << QSerialPort::NoParity
+        << QSerialPort::EvenParity
+        << QSerialPort::MarkParity
+        << QSerialPort::OddParity
+        << QSerialPort::SpaceParity;
 
     QList<QString> serialPortParametersList;
 
 signals:
+    void cmbx_listSerialPorts_currentIndexChanged(int index);
 
 private slots:
     void on_btn_scaningExistSerialPorts_clicked();

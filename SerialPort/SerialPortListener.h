@@ -27,7 +27,6 @@ void MainWindow::ConnectedModbusDevice(){
     modbusMaster->setConnectionParameter(QModbusDevice::SerialParityParameter, QSerialPort::NoParity);
     modbusMaster->setTimeout(100);
     modbusMaster->setNumberOfRetries(3);
-
     int deviceAddress = 10;
     int startRegisterAddress = 0;
     int countReadRegister = 2;
@@ -36,6 +35,7 @@ void MainWindow::ConnectedModbusDevice(){
 
     if (!modbusMaster->connectDevice()){
         ui->txtbrw_logBrowser->append("Error connected! - Device not found or not connected.");
+        modbusMaster->disconnectDevice();
         return;
     }
     if (auto *reply = modbusMaster->sendReadRequest(readUnit, deviceAddress)) {

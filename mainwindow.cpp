@@ -37,9 +37,21 @@ void MainWindow::on_btn_readChooserDevice_clicked()
 
 void MainWindow::LocalParametersInitilizatedOnStartup()
 {
-    for (const auto& baudrate : baudrateParametersList)
+    for (const auto& baudrate : parametersListBaudrate)
     {
         ui->cmbx_listBaudrate->addItem(QString::number(baudrate));
+    }
+    for (const auto& dataBits : parametersListDataBits)
+    {
+        ui->cmbx_listDataBits->addItem(QString::number(dataBits));
+    }
+    for (const auto& stopBits : parametersListStopBits)
+    {
+        ui->cmbx_listStopBits->addItem(QString::number(stopBits));
+    }
+    for (const auto& parity : parametersListParity)
+    {
+        ui->cmbx_listParity->addItem(QString::number(parity));
     }
 
     ui->cmbx_listSerialPorts->setCurrentIndex(0);
@@ -47,13 +59,13 @@ void MainWindow::LocalParametersInitilizatedOnStartup()
 
 void MainWindow::on_cmbx_listSerialPorts_currentIndexChanged(int index)
 {
-        ui->txtbrw_logBrowser->append("Reacted!!!");
-        //nameSerialPort = serialPortParametersList[index];
+    ui->txtbrw_logBrowser->append("Reacted!!!");
+     //nameSerialPort = serialPortParametersList[index];
 }
 
 void MainWindow::on_cmbx_listBaudrate_currentIndexChanged(int index)
 {
-    ui->txtbrw_logBrowser->append("Current baudrate: " + QString::number(index));
-    baudrate = baudrateParametersList[index];
+    //ui->txtbrw_logBrowser->append("Current baudrate: " + QString::number(index));
+    baudrate = parametersListBaudrate[index];
 }
 
