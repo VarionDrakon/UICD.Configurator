@@ -49,7 +49,7 @@ void MainWindow::LocalParametersInitilizatedOnStartup()
     {
         ui->cmbx_listStopBits->addItem(QString::number(stopBits));
     }
-    for (const auto& parity : parametersListParity)
+    for (const auto& parity : parametersListParityBits)
     {
         ui->cmbx_listParity->addItem(QString::number(parity));
     }

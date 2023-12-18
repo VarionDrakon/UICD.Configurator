@@ -22,9 +22,9 @@ void MainWindow::UpdateListCOMPorts(){
 void MainWindow::ConnectedModbusDevice(){
     modbusMaster->setConnectionParameter(QModbusDevice::SerialPortNameParameter, nameSerialPort);
     modbusMaster->setConnectionParameter(QModbusDevice::SerialBaudRateParameter, baudrate);
-    modbusMaster->setConnectionParameter(QModbusDevice::SerialDataBitsParameter, QSerialPort::Data8);
-    modbusMaster->setConnectionParameter(QModbusDevice::SerialStopBitsParameter, QSerialPort::OneStop);
-    modbusMaster->setConnectionParameter(QModbusDevice::SerialParityParameter, QSerialPort::NoParity);
+    modbusMaster->setConnectionParameter(QModbusDevice::SerialDataBitsParameter, dataBits);
+    modbusMaster->setConnectionParameter(QModbusDevice::SerialStopBitsParameter, stopBits);
+    modbusMaster->setConnectionParameter(QModbusDevice::SerialParityParameter, parityBits);
     modbusMaster->setTimeout(100);
     modbusMaster->setNumberOfRetries(3);
     int deviceAddress = 10;
