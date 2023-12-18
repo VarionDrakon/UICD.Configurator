@@ -13,14 +13,14 @@ void MainWindow::UpdateListCOMPorts(){
     ui->cmbx_listSerialPorts->clear();
 
     for(const QSerialPortInfo &portInfo : serialPortInfos){
-        ui->cmbx_listSerialPorts->addItem(portInfo.portName());
         serialPortParametersList.append(portInfo.portName());
+        ui->cmbx_listSerialPorts->addItem(portInfo.portName());
         ui->txtbrw_logBrowser->append("Found Serial Posrt`s: " + portInfo.portName());
     }
 }
 
 void MainWindow::ConnectedModbusDevice(){
-    modbusMaster->setConnectionParameter(QModbusDevice::SerialPortNameParameter, "COM9");
+    modbusMaster->setConnectionParameter(QModbusDevice::SerialPortNameParameter, nameSerialPort);
     modbusMaster->setConnectionParameter(QModbusDevice::SerialBaudRateParameter, baudrate);
     modbusMaster->setConnectionParameter(QModbusDevice::SerialDataBitsParameter, QSerialPort::Data8);
     modbusMaster->setConnectionParameter(QModbusDevice::SerialStopBitsParameter, QSerialPort::OneStop);

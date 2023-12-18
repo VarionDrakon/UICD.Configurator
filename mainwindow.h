@@ -37,7 +37,7 @@ public:
     const QList<QSerialPort::StopBits> parametersListStopBits = QList<QSerialPort::StopBits>()
         << QSerialPort::OneStop
         << QSerialPort::TwoStop;
-    const QList<QSerialPort::Parity> parametersListParity = QList<QSerialPort::Parity>()
+    const QList<QSerialPort::Parity> parametersListParityBits = QList<QSerialPort::Parity>()
         << QSerialPort::NoParity
         << QSerialPort::EvenParity
         << QSerialPort::MarkParity
@@ -58,10 +58,15 @@ private slots:
 
     void on_cmbx_listBaudrate_currentIndexChanged(int index);
 
+    void on_cmbx_listDataBits_currentIndexChanged(int index);
+
 private:
     Ui::MainWindow *ui;
 
     int baudrate;
+    int dataBits;
+    int stopBits;
+    int parityBits;
     QString nameSerialPort;
 };
 #endif // MAINWINDOW_H

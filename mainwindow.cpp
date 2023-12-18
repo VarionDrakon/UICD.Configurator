@@ -54,18 +54,29 @@ void MainWindow::LocalParametersInitilizatedOnStartup()
         ui->cmbx_listParity->addItem(QString::number(parity));
     }
 
-    ui->cmbx_listSerialPorts->setCurrentIndex(0);
+    ui->cmbx_listBaudrate->setCurrentIndex(3);
+    ui->cmbx_listDataBits->setCurrentIndex(3);
+    ui->cmbx_listStopBits->setCurrentIndex(0);
+    ui->cmbx_listParity->setCurrentIndex(0);
 }
 
 void MainWindow::on_cmbx_listSerialPorts_currentIndexChanged(int index)
 {
-    ui->txtbrw_logBrowser->append("Reacted!!!");
-     //nameSerialPort = serialPortParametersList[index];
+    if(!serialPortParametersList.empty() && index >= 0){
+        nameSerialPort = serialPortParametersList[index];
+        ui->txtbrw_logBrowser->append("Selected serial port: " + nameSerialPort);
+    }
 }
 
 void MainWindow::on_cmbx_listBaudrate_currentIndexChanged(int index)
 {
     //ui->txtbrw_logBrowser->append("Current baudrate: " + QString::number(index));
     baudrate = parametersListBaudrate[index];
+}
+
+
+void MainWindow::on_cmbx_listDataBits_currentIndexChanged(int index)
+{
+
 }
 
