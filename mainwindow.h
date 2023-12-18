@@ -60,6 +60,10 @@ private slots:
 
     void on_cmbx_listDataBits_currentIndexChanged(int index);
 
+    void on_cmbx_listStopBits_currentIndexChanged(int index);
+
+    void on_cmbx_listParity_currentIndexChanged(int index);
+
 private:
     Ui::MainWindow *ui;
 

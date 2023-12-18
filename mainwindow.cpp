@@ -15,7 +15,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->txtbrw_logBrowser->setReadOnly(true);
 
     LocalParametersInitilizatedOnStartup();
-
     UpdateListCOMPorts();
 }
 
@@ -28,7 +27,6 @@ void MainWindow::on_btn_scaningExistSerialPorts_clicked()
 {
     UpdateListCOMPorts();
 }
-
 
 void MainWindow::on_btn_readChooserDevice_clicked()
 {
@@ -54,10 +52,10 @@ void MainWindow::LocalParametersInitilizatedOnStartup()
         ui->cmbx_listParity->addItem(QString::number(parity));
     }
 
-    ui->cmbx_listBaudrate->setCurrentIndex(3);
-    ui->cmbx_listDataBits->setCurrentIndex(3);
-    ui->cmbx_listStopBits->setCurrentIndex(0);
-    ui->cmbx_listParity->setCurrentIndex(0);
+    MainWindow::on_cmbx_listBaudrate_currentIndexChanged(3);
+    MainWindow::on_cmbx_listDataBits_currentIndexChanged(3);
+    MainWindow::on_cmbx_listStopBits_currentIndexChanged(0);
+    MainWindow::on_cmbx_listParity_currentIndexChanged(0);
 }
 
 void MainWindow::on_cmbx_listSerialPorts_currentIndexChanged(int index)
@@ -70,13 +68,29 @@ void MainWindow::on_cmbx_listSerialPorts_currentIndexChanged(int index)
 
 void MainWindow::on_cmbx_listBaudrate_currentIndexChanged(int index)
 {
-    //ui->txtbrw_logBrowser->append("Current baudrate: " + QString::number(index));
+    ui->cmbx_listBaudrate->setCurrentIndex(index);
     baudrate = parametersListBaudrate[index];
+    ui->txtbrw_logBrowser->append("Current baudrate: " + QString::number(index));
 }
-
 
 void MainWindow::on_cmbx_listDataBits_currentIndexChanged(int index)
 {
+    ui->cmbx_listDataBits->setCurrentIndex(index);
+    dataBits = parametersListDataBits[index];
+    ui->txtbrw_logBrowser->append("Current dataBits: " + QString::number(index));
+}
 
+void MainWindow::on_cmbx_listStopBits_currentIndexChanged(int index)
+{
+    ui->cmbx_listStopBits->setCurrentIndex(index);
+    stopBits = parametersListStopBits[index];
+    ui->txtbrw_logBrowser->append("Current stopBits: " + QString::number(index));
+}
+
+void MainWindow::on_cmbx_listParity_currentIndexChanged(int index)
+{
+    ui->cmbx_listParity->setCurrentIndex(index);
+    parityBits = parametersListParityBits[index];
+    ui->txtbrw_logBrowser->append("Current parityBits: " + QString::number(index));
 }
 
