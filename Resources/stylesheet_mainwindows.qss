@@ -53,7 +53,7 @@ QComboBox, QComboBox:hover, QComboBox:active {
     selection-background-color: rgb(31, 40, 51);
 }
 
-QListWidget, QTreeView, QTextBrowser{
+QListView, QTreeView, QTextBrowser{
     color: rgb(197, 198, 199);
     background-color: rgb(11, 12, 16);
     selection-background-color: rgb(31, 40, 51);

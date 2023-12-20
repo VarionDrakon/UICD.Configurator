@@ -5,6 +5,7 @@
 #include <QModbusDevice>
 #include <QModbusRtuSerialMaster>
 #include <QSerialPort>
+#include <QStandardItemModel>
 //Create object ModBus RTU masters
 QModbusRtuSerialClient *modbusMaster = new QModbusRtuSerialClient();
 
@@ -73,4 +74,19 @@ void MainWindow::ConnectedModbusDevice(){
 void MainWindow::ResponseModbusDevice(){
     //auto reply = qobject_cast<QModbusReply *>(sender());
 
+}
+
+void MainWindow::ParseModBusAnswer(){
+    QStandardItemModel *model = new QStandardItemModel(0, 1, this); //create model with 0 rows, 1 column and use this class
+    QTreeView *treeView = ui->treeView; //selected UI-object
+    QStandardItem *rootItem = model->invisibleRootItem(); //retrun invisible root element (I don`t know nahuya)
+    model->setHeaderData(0, Qt::Horizontal, "Parameters");
+    treeView->setRootIsDecorated(true); //show "arrow" for elements
+    treeView->setEditTriggers(QAbstractItemView::NoEditTriggers); //ban on editable elements (Nehui rename something)
+    treeView->setModel(model); //indicate use this model
+
+    QStandardItem *item1 = new QStandardItem("Element 1");
+    rootItem->appendRow(item1);
+    QStandardItem *childItem = new QStandardItem("Children elements 1");
+    item1->appendRow(childItem);
 }

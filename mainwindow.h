@@ -19,6 +19,7 @@ public:
     void LocalParametersInitilizatedOnStartup();
     void ResponseModbusDevice();
     void ConnectedModbusDevice();
+    void ParseModBusAnswer();
 
     const QList<QSerialPort::BaudRate> parametersListBaudrate = QList<QSerialPort::BaudRate>()
         << QSerialPort::Baud1200

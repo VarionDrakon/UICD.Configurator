@@ -61,19 +61,6 @@ li.checked::marker { content: &quot;\2612&quot;; }
      <bool>false</bool>
     </property>
    </widget>
-   <widget class="QListWidget" name="listWidget_2">
-    <property name="geometry">
-     <rect>
-      <x>381</x>
-      <y>53</y>
-      <width>621</width>
-      <height>461</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true"/>
-    </property>
-   </widget>
    <widget class="QTreeView" name="treeView">
     <property name="geometry">
      <rect>
@@ -82,6 +69,12 @@ li.checked::marker { content: &quot;\2612&quot;; }
       <width>371</width>
       <height>291</height>
      </rect>
+    </property>
+    <property name="toolTip">
+     <string/>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
     </property>
     <property name="styleSheet">
      <string notr="true"/>
@@ -267,6 +260,16 @@ li.checked::marker { content: &quot;\2612&quot;; }
      </item>
     </layout>
    </widget>
+   <widget class="QListView" name="listView">
+    <property name="geometry">
+     <rect>
+      <x>380</x>
+      <y>71</y>
+      <width>631</width>
+      <height>441</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -282,7 +285,6 @@ li.checked::marker { content: &quot;\2612&quot;; }
  </widget>
  <tabstops>
   <tabstop>txtbrw_logBrowser</tabstop>
-  <tabstop>listWidget_2</tabstop>
   <tabstop>treeView</tabstop>
  </tabstops>
  <resources/>

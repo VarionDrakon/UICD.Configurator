@@ -16,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     LocalParametersInitilizatedOnStartup();
     UpdateListCOMPorts();
+    ParseModBusAnswer();
 }
 
 MainWindow::~MainWindow()
@@ -93,4 +94,3 @@ void MainWindow::on_cmbx_listParity_currentIndexChanged(int index)
     parityBits = parametersListParityBits[index];
     ui->txtbrw_logBrowser->append("Current parityBits: " + QString::number(index));
 }
-
