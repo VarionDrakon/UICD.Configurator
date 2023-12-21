@@ -8,6 +8,8 @@
 #include <QStandardItemModel>
 #include <QTranslator>
 #include <QList>
+#include <QStyledItemDelegate>
+#include <QAbstractItemModel>
 //Create object Modbus RTU masters
 QModbusRtuSerialClient *modbusMaster = new QModbusRtuSerialClient();
 //Create object Modbus RTU Answer
@@ -34,7 +36,7 @@ void MainWindow::ConnectedModbusDevice(){
     modbusMaster->setNumberOfRetries(3);
     int deviceAddress = 10;
     int startRegisterAddress = 0;
-    int countReadRegister = 2;
+    int countReadRegister = 9;
 
     QModbusDataUnit readUnit(QModbusDataUnit::HoldingRegisters, startRegisterAddress, countReadRegister);
 
@@ -54,10 +56,6 @@ void MainWindow::ConnectedModbusDevice(){
                     for (int i = 0; i < data.valueCount(); i++) {
                         modbusRegisterAnswer->append(data.value(i));
                     }
-                    for (int i = 0; i < modbusRegisterAnswer->size(); i++) {
-                        int value = modbusRegisterAnswer->at(i);
-                        ui->txtbrw_logBrowser->append("Value register: " + QString::number((value)));
-                    }
                 }
                 else if (reply->error() == QModbusDevice::ProtocolError) {
                     ui->txtbrw_logBrowser->append("Modbus protocol error:" + reply->errorString());
@@ -67,6 +65,7 @@ void MainWindow::ConnectedModbusDevice(){
                 }
                 reply->deleteLater();
                 modbusMaster->disconnectDevice();
+                ResponseModbusDevice();
                 //delete modbusRegisterAnswer;
             });
         }
@@ -82,11 +81,28 @@ void MainWindow::ConnectedModbusDevice(){
 }
 
 void MainWindow::ResponseModbusDevice(){
-    //auto reply = qobject_cast<QModbusReply *>(sender());
-
+    QAbstractItemModel *qaim = ui->tableView->model();
+    int rows = qaim->rowCount();
+    emit qaim->layoutAboutToBeChanged();
+    for (int row = 0; row < rows; row++) {
+        QModelIndex index = qaim->index(row, 1);
+        qaim->setData(index, modbusRegisterAnswer->at(row), Qt::EditRole);
+        ui->txtbrw_logBrowser->append("Success!");
+    }
+    emit qaim->layoutChanged();
+    ui->tableView->reset();
 }
 
+class ReadOnlyDelegate: public QStyledItemDelegate{
+public:
+    using QStyledItemDelegate::QStyledItemDelegate;
+    QWidget *createEditor(QWidget *, const QStyleOptionViewItem &, const QModelIndex &) const override {
+        return nullptr;
+    }
+};
+
 void MainWindow::ParseModBusAnswer(){
+    /*
     QStandardItemModel *model = new QStandardItemModel(0, 1, this); //create model with 0 rows, 1 column and use this class
     QTreeView *treeView = ui->treeView; //selected UI-object
     QStandardItem *rootItem = model->invisibleRootItem(); //retrun invisible root element (I don`t know nahuya)
@@ -99,5 +115,30 @@ void MainWindow::ParseModBusAnswer(){
     QStandardItem *item1 = new QStandardItem(QObject::tr("File"));
     rootItem->appendRow(item1);
     QStandardItem *childItem = new QStandardItem("Children elements 1");
-    item1->appendRow(childItem);
+    item1->appendRow(childItem);*/
+
+    QStandardItemModel* model = new QStandardItemModel(0, 2, this);
+    QTableView* tableView = ui->tableView;
+    tableView->setModel(model);
+
+    // Добавление элементов в модель
+    QStandardItem* item1 = new QStandardItem("Modbus slave address");
+    QStandardItem* item2 = new QStandardItem("Baudrate");
+    QStandardItem* item3 = new QStandardItem("Totalize 1 (GENERAL)");
+    QStandardItem* item4 = new QStandardItem("Totalize 2 (FORWARD)");
+    QStandardItem* item5 = new QStandardItem("Totalize 3 (REVERSE)");
+    model->appendRow(item1);
+    model->appendRow(item2);
+    model->appendRow(item3);
+    model->appendRow(item4);
+    model->appendRow(item5);
+    // Получение доступа к элементу для изменения данных
+    QStandardItem* itemToUpdate = model->item(0); // получаем элемент с индексом 0
+    if (itemToUpdate) {
+        ui->txtbrw_logBrowser->append("Updated Item");
+    }
+    tableView->setItemDelegateForColumn(0, new ReadOnlyDelegate);
+    // Обновление данных в представлении
+    model->itemChanged(itemToUpdate); // уведомляем модель о изменении элемента
+    tableView->update(); // обновляем представление
 }

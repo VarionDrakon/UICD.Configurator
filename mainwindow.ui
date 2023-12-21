@@ -260,12 +260,12 @@ li.checked::marker { content: &quot;\2612&quot;; }
      </item>
     </layout>
    </widget>
-   <widget class="QListView" name="listView">
+   <widget class="QTableView" name="tableView">
     <property name="geometry">
      <rect>
       <x>380</x>
-      <y>71</y>
-      <width>631</width>
+      <y>70</y>
+      <width>621</width>
       <height>441</height>
      </rect>
     </property>
