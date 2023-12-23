@@ -14,6 +14,7 @@
 QModbusRtuSerialClient *modbusMaster = new QModbusRtuSerialClient();
 //Create object Modbus RTU Answer
 QList<int> *modbusRegisterAnswer = new QList<int>;
+QList<unsigned int> *parseModbusAnswer = new QList<unsigned int>;
 
 void MainWindow::UpdateListCOMPorts(){
     const auto serialPortInfos = QSerialPortInfo::availablePorts();
@@ -65,6 +66,7 @@ void MainWindow::ConnectedModbusDevice(){
                 }
                 reply->deleteLater();
                 modbusMaster->disconnectDevice();
+                ParseModbusResponse();
                 ResponseModbusDevice();
                 //delete modbusRegisterAnswer;
             });
@@ -80,14 +82,42 @@ void MainWindow::ConnectedModbusDevice(){
     }
 }
 
+void MainWindow::ParseModbusResponse(){
+    parseModbusAnswer->resize(5);
+    parseModbusAnswer->fill(0);
+
+    parseModbusAnswer->replace(0, modbusRegisterAnswer->at(0));
+
+    unsigned int baudrate = modbusRegisterAnswer->at(1);
+    baudrate = (baudrate << 16) |  modbusRegisterAnswer->at(2);
+    parseModbusAnswer->replace(1, baudrate);
+    //ui->txtbrw_logBrowser->append(QString::number(modbusRegisterAnswer->at(1)));
+
+    unsigned int totalizeOne = modbusRegisterAnswer->at(3);
+    totalizeOne = (totalizeOne << 16) |  modbusRegisterAnswer->at(4);
+    parseModbusAnswer->replace(2, totalizeOne);
+    //ui->txtbrw_logBrowser->append(QString::number(modbusRegisterAnswer->at(2)));
+
+    unsigned int totalizeTwo = modbusRegisterAnswer->at(5);
+    totalizeTwo = (totalizeTwo << 16) |  modbusRegisterAnswer->at(6);
+    parseModbusAnswer->replace(3, totalizeTwo);
+    //ui->txtbrw_logBrowser->append(QString::number(modbusRegisterAnswer->at(3)));
+
+    unsigned int totalizeThree = modbusRegisterAnswer->at(7);
+    totalizeThree = (totalizeThree << 16) |  modbusRegisterAnswer->at(8);
+    parseModbusAnswer->replace(4, totalizeThree);
+    //ui->txtbrw_logBrowser->append(QString::number(modbusRegisterAnswer->at(4)));
+}
+
 void MainWindow::ResponseModbusDevice(){
     QAbstractItemModel *qaim = ui->tableView->model();
     int rows = qaim->rowCount();
     emit qaim->layoutAboutToBeChanged();
     for (int row = 0; row < rows; row++) {
         QModelIndex index = qaim->index(row, 1);
-        qaim->setData(index, modbusRegisterAnswer->at(row), Qt::EditRole);
-        ui->txtbrw_logBrowser->append("Success!");
+
+        qaim->setData(index, parseModbusAnswer->at(row), Qt::EditRole);
+        //ui->txtbrw_logBrowser->append("Success!");
     }
     emit qaim->layoutChanged();
     ui->tableView->reset();
@@ -101,7 +131,7 @@ public:
     }
 };
 
-void MainWindow::ParseModBusAnswer(){
+void MainWindow::ParseModbusAnswer(){
     /*
     QStandardItemModel *model = new QStandardItemModel(0, 1, this); //create model with 0 rows, 1 column and use this class
     QTreeView *treeView = ui->treeView; //selected UI-object
@@ -134,9 +164,6 @@ void MainWindow::ParseModBusAnswer(){
     model->appendRow(item5);
     // Получение доступа к элементу для изменения данных
     QStandardItem* itemToUpdate = model->item(0); // получаем элемент с индексом 0
-    if (itemToUpdate) {
-        ui->txtbrw_logBrowser->append("Updated Item");
-    }
     tableView->setItemDelegateForColumn(0, new ReadOnlyDelegate);
     // Обновление данных в представлении
     model->itemChanged(itemToUpdate); // уведомляем модель о изменении элемента

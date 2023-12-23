@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     LocalParametersInitilizatedOnStartup();
     UpdateListCOMPorts();
-    ParseModBusAnswer();
+    ParseModbusAnswer();
 }
 
 MainWindow::~MainWindow()
