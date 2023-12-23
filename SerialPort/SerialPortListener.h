@@ -110,17 +110,25 @@ void MainWindow::ParseModbusResponse(){
 }
 
 void MainWindow::ResponseModbusDevice(){
-    QAbstractItemModel *qaim = ui->tableView->model();
-    int rows = qaim->rowCount();
+    auto *tableOutputDataParse = ui->tableView;
+    QAbstractItemModel *qaim = tableOutputDataParse->model();
+    QComboBox* cmbxBaudrate = new QComboBox;
     emit qaim->layoutAboutToBeChanged();
-    for (int row = 0; row < rows; row++) {
-        QModelIndex index = qaim->index(row, 1);
 
+    for (int row = 0; row < qaim->rowCount(); row++) {
+        QModelIndex index = qaim->index(row, 1);
         qaim->setData(index, parseModbusAnswer->at(row), Qt::EditRole);
         //ui->txtbrw_logBrowser->append("Success!");
     }
+
     emit qaim->layoutChanged();
-    ui->tableView->reset();
+    tableOutputDataParse->reset();
+
+    for (const auto& baudrate : parametersListBaudrate)
+    {
+        cmbxBaudrate->addItem(QString::number(baudrate));
+    }
+    tableOutputDataParse->setIndexWidget(tableOutputDataParse->model()->index(1, 1), cmbxBaudrate);
 }
 
 class ReadOnlyDelegate: public QStyledItemDelegate{
@@ -147,11 +155,12 @@ void MainWindow::ParseModbusAnswer(){
     QStandardItem *childItem = new QStandardItem("Children elements 1");
     item1->appendRow(childItem);*/
 
+
     QStandardItemModel* model = new QStandardItemModel(0, 2, this);
     QTableView* tableView = ui->tableView;
     tableView->setModel(model);
 
-    // Добавление элементов в модель
+    //add item`s to model
     QStandardItem* item1 = new QStandardItem("Modbus slave address");
     QStandardItem* item2 = new QStandardItem("Baudrate");
     QStandardItem* item3 = new QStandardItem("Totalize 1 (GENERAL)");
@@ -162,10 +171,10 @@ void MainWindow::ParseModbusAnswer(){
     model->appendRow(item3);
     model->appendRow(item4);
     model->appendRow(item5);
-    // Получение доступа к элементу для изменения данных
-    QStandardItem* itemToUpdate = model->item(0); // получаем элемент с индексом 0
+
+    QStandardItem* itemToUpdate = model->item(0);
     tableView->setItemDelegateForColumn(0, new ReadOnlyDelegate);
-    // Обновление данных в представлении
-    model->itemChanged(itemToUpdate); // уведомляем модель о изменении элемента
-    tableView->update(); // обновляем представление
+
+    model->itemChanged(itemToUpdate);
+    tableView->update();
 }
