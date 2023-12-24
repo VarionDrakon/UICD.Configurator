@@ -66,6 +66,8 @@ private slots:
 
     void on_cmbx_listParity_currentIndexChanged(int index);
 
+    void on_spnbx_listSlaveID_valueChanged(int arg1);
+
 private:
     Ui::MainWindow *ui;
 
@@ -73,6 +75,7 @@ private:
     int dataBits;
     int stopBits;
     int parityBits;
+    int slaveAddressBits;
     QString nameSerialPort;
 };
 #endif // MAINWINDOW_H

@@ -10,6 +10,7 @@
 #include <QList>
 #include <QStyledItemDelegate>
 #include <QAbstractItemModel>
+#include <QDateTime>
 //Create object Modbus RTU masters
 QModbusRtuSerialClient *modbusMaster = new QModbusRtuSerialClient();
 //Create object Modbus RTU Answer
@@ -35,7 +36,7 @@ void MainWindow::ConnectedModbusDevice(){
     modbusMaster->setConnectionParameter(QModbusDevice::SerialParityParameter, parityBits);
     modbusMaster->setTimeout(100);
     modbusMaster->setNumberOfRetries(3);
-    int deviceAddress = 10;
+    //int deviceAddress = 10;
     int startRegisterAddress = 0;
     int countReadRegister = 9;
 
@@ -46,7 +47,7 @@ void MainWindow::ConnectedModbusDevice(){
         modbusMaster->disconnectDevice();
         return;
     }
-    if (auto *reply = modbusMaster->sendReadRequest(readUnit, deviceAddress)) {
+    if (auto *reply = modbusMaster->sendReadRequest(readUnit, slaveAddressBits)) {
         if (!reply->isFinished()) {
             connect(reply, &QModbusReply::finished, [=](){
                 if (!reply)
@@ -91,7 +92,7 @@ void MainWindow::ParseModbusResponse(){
     unsigned int baudrate = modbusRegisterAnswer->at(1);
     baudrate = (baudrate << 16) |  modbusRegisterAnswer->at(2);
     parseModbusAnswer->replace(1, baudrate);
-    //ui->txtbrw_logBrowser->append(QString::number(modbusRegisterAnswer->at(1)));
+    //ui->txtbrw_logBrowser->append(QString::number(parseModbusAnswer->at(1)));
 
     unsigned int totalizeOne = modbusRegisterAnswer->at(3);
     totalizeOne = (totalizeOne << 16) |  modbusRegisterAnswer->at(4);
@@ -110,6 +111,9 @@ void MainWindow::ParseModbusResponse(){
 }
 
 void MainWindow::ResponseModbusDevice(){
+    QDateTime currentTime = QDateTime::currentDateTime();
+    QString formattedTime = currentTime.toString("yyyy-MM-dd hh:mm:ss");
+    int indexValue = -1;
     auto *tableOutputDataParse = ui->tableView;
     QAbstractItemModel *qaim = tableOutputDataParse->model();
     QComboBox* cmbxBaudrate = new QComboBox;
@@ -128,7 +132,16 @@ void MainWindow::ResponseModbusDevice(){
     {
         cmbxBaudrate->addItem(QString::number(baudrate));
     }
+
+    for (int i = 0; i < parametersListBaudrate.count(); i++){
+        if(parametersListBaudrate.at(i) == parseModbusAnswer->at(1)){
+            indexValue = i;
+            break;
+        }
+    }
+    cmbxBaudrate->setCurrentIndex(indexValue);
     tableOutputDataParse->setIndexWidget(tableOutputDataParse->model()->index(1, 1), cmbxBaudrate);
+    ui->txtbrw_logBrowser->append("Modbus answer read success! Time read: " + formattedTime);
 }
 
 class ReadOnlyDelegate: public QStyledItemDelegate{
