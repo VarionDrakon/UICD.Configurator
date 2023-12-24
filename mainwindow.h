@@ -21,6 +21,8 @@ public:
     void ConnectedModbusDevice();
     void ParseModbusAnswer();
     void ParseModbusResponse();
+    void WriteModbusDevice();
+    void ParametersModbusDevice();
 
     const QList<QSerialPort::BaudRate> parametersListBaudrate = QList<QSerialPort::BaudRate>()
         << QSerialPort::Baud1200
@@ -67,6 +69,8 @@ private slots:
     void on_cmbx_listParity_currentIndexChanged(int index);
 
     void on_spnbx_listSlaveID_valueChanged(int arg1);
+
+    void on_btn_writeChooserDevice_clicked();
 
 private:
     Ui::MainWindow *ui;

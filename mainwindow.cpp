@@ -34,6 +34,11 @@ void MainWindow::on_btn_readChooserDevice_clicked()
     ConnectedModbusDevice();
 }
 
+void MainWindow::on_btn_writeChooserDevice_clicked()
+{
+    WriteModbusDevice();
+}
+
 void MainWindow::LocalParametersInitilizatedOnStartup()
 {
     for (const auto& baudrate : parametersListBaudrate)
@@ -101,4 +106,3 @@ void MainWindow::on_spnbx_listSlaveID_valueChanged(int arg1)
     slaveAddressBits = arg1;
     //ui->txtbrw_logBrowser->append("Current slave address: " + QString::number(arg1));
 }
-

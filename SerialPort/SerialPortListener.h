@@ -1,21 +1,18 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <QSerialPortInfo>
-#include <QModbusDataUnit>
-#include <QModbusDevice>
-#include <QModbusRtuSerialMaster>
-#include <QSerialPort>
 #include <QStandardItemModel>
 #include <QTranslator>
 #include <QList>
 #include <QStyledItemDelegate>
 #include <QAbstractItemModel>
 #include <QDateTime>
-//Create object Modbus RTU masters
+#include "ConnectionParametersModbus.h"
 QModbusRtuSerialClient *modbusMaster = new QModbusRtuSerialClient();
 //Create object Modbus RTU Answer
 QList<int> *modbusRegisterAnswer = new QList<int>;
 QList<unsigned int> *parseModbusAnswer = new QList<unsigned int>;
+QComboBox *cmbxBaudrate;
+int indexValue = -1;
 
 void MainWindow::UpdateListCOMPorts(){
     const auto serialPortInfos = QSerialPortInfo::availablePorts();
@@ -54,10 +51,11 @@ void MainWindow::ConnectedModbusDevice(){
                     return;
                 if (reply->error() == QModbusDevice::NoError) {
                     const QModbusDataUnit data = reply->result();
-
+                    modbusRegisterAnswer->clear();
                     for (int i = 0; i < data.valueCount(); i++) {
                         modbusRegisterAnswer->append(data.value(i));
                     }
+                    ParseModbusResponse();
                 }
                 else if (reply->error() == QModbusDevice::ProtocolError) {
                     ui->txtbrw_logBrowser->append("Modbus protocol error:" + reply->errorString());
@@ -67,8 +65,6 @@ void MainWindow::ConnectedModbusDevice(){
                 }
                 reply->deleteLater();
                 modbusMaster->disconnectDevice();
-                ParseModbusResponse();
-                ResponseModbusDevice();
                 //delete modbusRegisterAnswer;
             });
         }
@@ -84,6 +80,7 @@ void MainWindow::ConnectedModbusDevice(){
 }
 
 void MainWindow::ParseModbusResponse(){
+    parseModbusAnswer->clear();
     parseModbusAnswer->resize(5);
     parseModbusAnswer->fill(0);
 
@@ -108,15 +105,16 @@ void MainWindow::ParseModbusResponse(){
     totalizeThree = (totalizeThree << 16) |  modbusRegisterAnswer->at(8);
     parseModbusAnswer->replace(4, totalizeThree);
     //ui->txtbrw_logBrowser->append(QString::number(modbusRegisterAnswer->at(4)));
+    ResponseModbusDevice();
 }
 
 void MainWindow::ResponseModbusDevice(){
     QDateTime currentTime = QDateTime::currentDateTime();
     QString formattedTime = currentTime.toString("yyyy-MM-dd hh:mm:ss");
-    int indexValue = -1;
+
     auto *tableOutputDataParse = ui->tableView;
     QAbstractItemModel *qaim = tableOutputDataParse->model();
-    QComboBox* cmbxBaudrate = new QComboBox;
+    cmbxBaudrate = new QComboBox;
     emit qaim->layoutAboutToBeChanged();
 
     for (int row = 0; row < qaim->rowCount(); row++) {
@@ -168,7 +166,6 @@ void MainWindow::ParseModbusAnswer(){
     QStandardItem *childItem = new QStandardItem("Children elements 1");
     item1->appendRow(childItem);*/
 
-
     QStandardItemModel* model = new QStandardItemModel(0, 2, this);
     QTableView* tableView = ui->tableView;
     tableView->setModel(model);
@@ -190,4 +187,65 @@ void MainWindow::ParseModbusAnswer(){
 
     model->itemChanged(itemToUpdate);
     tableView->update();
+}
+
+void MainWindow::WriteModbusDevice(){
+    modbusMaster->setConnectionParameter(QModbusDevice::SerialPortNameParameter, nameSerialPort);
+    modbusMaster->setConnectionParameter(QModbusDevice::SerialBaudRateParameter, baudrate);
+    modbusMaster->setConnectionParameter(QModbusDevice::SerialDataBitsParameter, dataBits);
+    modbusMaster->setConnectionParameter(QModbusDevice::SerialStopBitsParameter, stopBits);
+    modbusMaster->setConnectionParameter(QModbusDevice::SerialParityParameter, parityBits);
+    modbusMaster->setTimeout(100);
+    modbusMaster->setNumberOfRetries(3);
+    //int deviceAddress = 10;
+    int startRegisterAddress = 0;
+    int countWriteRegister = 3;
+
+    auto *tableOutputDataParse = ui->tableView;
+    QAbstractItemModel *qaim = tableOutputDataParse->model();
+    QModelIndex indexSlaveCell = qaim->index(0, 1);
+    QVariant dataSlaveCell = qaim->data(indexSlaveCell);
+    int slaveAddress = dataSlaveCell.toInt();
+
+    int Baudrate = parametersListBaudrate.at(cmbxBaudrate->currentIndex());
+
+    ui->txtbrw_logBrowser->append(QString::number(Baudrate));
+
+    QModbusDataUnit writeUnit(QModbusDataUnit::HoldingRegisters, startRegisterAddress, countWriteRegister);
+
+    if (!modbusMaster->connectDevice()){
+        ui->txtbrw_logBrowser->append("Error connected! - Device not found or not connected.");
+        modbusMaster->disconnectDevice();
+        return;
+    }
+    writeUnit.setValue(0, slaveAddress);
+    writeUnit.setValue(1, Baudrate);
+    writeUnit.setValue(2, Baudrate);
+
+    if (auto *reply = modbusMaster->sendWriteRequest(writeUnit, slaveAddressBits)) {
+        if (!reply->isFinished()) {
+            connect(reply, &QModbusReply::finished, [=](){
+                if (!reply)
+                    return;
+                if (reply->error() == QModbusDevice::NoError) {
+                    ui->txtbrw_logBrowser->append("Success write!");
+                }
+                else if (reply->error() == QModbusDevice::ProtocolError) {
+                    ui->txtbrw_logBrowser->append("Modbus protocol error:" + reply->errorString());
+                }
+                else {
+                    ui->txtbrw_logBrowser->append("Modbus reply error:" + reply->errorString());
+                }
+                reply->deleteLater();
+                modbusMaster->disconnectDevice();
+            });
+        }
+        else{
+            delete reply;
+        }
+    }
+    else {
+        ui->txtbrw_logBrowser->append("Failed to send Modbus request: " + modbusMaster->errorString());
+        modbusMaster->disconnectDevice();
+    }
 }
