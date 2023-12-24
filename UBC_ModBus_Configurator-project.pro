@@ -13,9 +13,8 @@ SOURCES += \
     mainwindow.cpp
 
 HEADERS += \
-    SerialPort/ConnectionParametersModbus.h \
-    SerialPort/SerialPortListener.h \
-    SerialPort/SerialPortSender.h \
+    SerialPort/ModbusCommunication.h \
+    SerialPort/ParametersConnectionModbus.h \
     mainwindow.h
 
 FORMS += \

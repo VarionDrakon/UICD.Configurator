@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "SerialPort/SerialPortListener.h"
+#include "SerialPort/ModbusCommunication.h"
 //Libs included
 #include <QSerialPort>
 #include <QList>

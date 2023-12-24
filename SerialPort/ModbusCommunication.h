@@ -6,8 +6,8 @@
 #include <QStyledItemDelegate>
 #include <QAbstractItemModel>
 #include <QDateTime>
-#include "ConnectionParametersModbus.h"
-QModbusRtuSerialClient *modbusMaster = new QModbusRtuSerialClient();
+#include "ParametersConnectionModbus.h"
+
 //Create object Modbus RTU Answer
 QList<int> *modbusRegisterAnswer = new QList<int>;
 QList<unsigned int> *parseModbusAnswer = new QList<unsigned int>;
@@ -26,18 +26,8 @@ void MainWindow::UpdateListCOMPorts(){
 }
 
 void MainWindow::ConnectedModbusDevice(){
-    modbusMaster->setConnectionParameter(QModbusDevice::SerialPortNameParameter, nameSerialPort);
-    modbusMaster->setConnectionParameter(QModbusDevice::SerialBaudRateParameter, baudrate);
-    modbusMaster->setConnectionParameter(QModbusDevice::SerialDataBitsParameter, dataBits);
-    modbusMaster->setConnectionParameter(QModbusDevice::SerialStopBitsParameter, stopBits);
-    modbusMaster->setConnectionParameter(QModbusDevice::SerialParityParameter, parityBits);
-    modbusMaster->setTimeout(100);
-    modbusMaster->setNumberOfRetries(3);
-    //int deviceAddress = 10;
-    int startRegisterAddress = 0;
-    int countReadRegister = 9;
-
-    QModbusDataUnit readUnit(QModbusDataUnit::HoldingRegisters, startRegisterAddress, countReadRegister);
+    SetupModbusParameters();
+    QModbusDataUnit readUnit(QModbusDataUnit::HoldingRegisters, 0, 9);
 
     if (!modbusMaster->connectDevice()){
         ui->txtbrw_logBrowser->append("Error connected! - Device not found or not connected.");
@@ -65,12 +55,10 @@ void MainWindow::ConnectedModbusDevice(){
                 }
                 reply->deleteLater();
                 modbusMaster->disconnectDevice();
-                //delete modbusRegisterAnswer;
             });
         }
         else{
-            delete reply;
-            delete modbusRegisterAnswer;
+            delete reply; //If response has already been completed, delete the response object.
         }
     }
     else {
@@ -190,15 +178,7 @@ void MainWindow::ParseModbusAnswer(){
 }
 
 void MainWindow::WriteModbusDevice(){
-    modbusMaster->setConnectionParameter(QModbusDevice::SerialPortNameParameter, nameSerialPort);
-    modbusMaster->setConnectionParameter(QModbusDevice::SerialBaudRateParameter, baudrate);
-    modbusMaster->setConnectionParameter(QModbusDevice::SerialDataBitsParameter, dataBits);
-    modbusMaster->setConnectionParameter(QModbusDevice::SerialStopBitsParameter, stopBits);
-    modbusMaster->setConnectionParameter(QModbusDevice::SerialParityParameter, parityBits);
-    modbusMaster->setTimeout(100);
-    modbusMaster->setNumberOfRetries(3);
-    int startRegisterAddress = 0;
-    int countWriteRegister = 3;
+    SetupModbusParameters();
 
     auto *tableOutputDataParse = ui->tableView;
     QAbstractItemModel *qaim = tableOutputDataParse->model();
@@ -210,41 +190,40 @@ void MainWindow::WriteModbusDevice(){
 
     //ui->txtbrw_logBrowser->append(QString::number(Baudrate));
 
-    QModbusDataUnit writeUnit(QModbusDataUnit::HoldingRegisters, startRegisterAddress, countWriteRegister);
+    QModbusDataUnit writeUnit(QModbusDataUnit::HoldingRegisters, 0, 3);
 
     int baudratePart_1 = (baudrateInteger >> 16) & 0xFFFF;
     int baudratePart_2 = baudrateInteger & 0xFFFF;
+
+    writeUnit.setValue(0, slaveAddress);
+    writeUnit.setValue(1, baudratePart_1);
+    writeUnit.setValue(2, baudratePart_2);
 
     if (!modbusMaster->connectDevice()){
         ui->txtbrw_logBrowser->append("Error connected! - Device not found or not connected.");
         modbusMaster->disconnectDevice();
         return;
     }
-
-    writeUnit.setValue(0, slaveAddress);
-    writeUnit.setValue(1, baudratePart_1);
-    writeUnit.setValue(2, baudratePart_2);
-
-    if (auto *reply = modbusMaster->sendWriteRequest(writeUnit, slaveAddressBits)) {
-        if (!reply->isFinished()) {
-            connect(reply, &QModbusReply::finished, [=](){
-                if (!reply)
+    if (auto *write = modbusMaster->sendWriteRequest(writeUnit, slaveAddressBits)) {
+        if (!write->isFinished()) {
+            connect(write, &QModbusReply::finished, [=](){
+                if (!write)
                     return;
-                if (reply->error() == QModbusDevice::NoError) {
+                if (write->error() == QModbusDevice::NoError) {
                     ui->txtbrw_logBrowser->append("Success write!");
                 }
-                else if (reply->error() == QModbusDevice::ProtocolError) {
-                    ui->txtbrw_logBrowser->append("Modbus protocol error:" + reply->errorString());
+                else if (write->error() == QModbusDevice::ProtocolError) {
+                    ui->txtbrw_logBrowser->append("Modbus protocol error:" + write->errorString());
                 }
                 else {
-                    ui->txtbrw_logBrowser->append("Modbus reply error:" + reply->errorString());
+                    ui->txtbrw_logBrowser->append("Modbus reply error:" + write->errorString());
                 }
-                reply->deleteLater();
+                write->deleteLater();
                 modbusMaster->disconnectDevice();
             });
         }
         else{
-            delete reply;
+            delete write;
         }
     }
     else {

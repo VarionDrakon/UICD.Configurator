@@ -23,6 +23,7 @@ public:
     void ParseModbusResponse();
     void WriteModbusDevice();
     void ParametersModbusDevice();
+    void SetupModbusParameters();
 
     const QList<QSerialPort::BaudRate> parametersListBaudrate = QList<QSerialPort::BaudRate>()
         << QSerialPort::Baud1200
