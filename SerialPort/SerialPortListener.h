@@ -197,7 +197,6 @@ void MainWindow::WriteModbusDevice(){
     modbusMaster->setConnectionParameter(QModbusDevice::SerialParityParameter, parityBits);
     modbusMaster->setTimeout(100);
     modbusMaster->setNumberOfRetries(3);
-    //int deviceAddress = 10;
     int startRegisterAddress = 0;
     int countWriteRegister = 3;
 
@@ -207,20 +206,24 @@ void MainWindow::WriteModbusDevice(){
     QVariant dataSlaveCell = qaim->data(indexSlaveCell);
     int slaveAddress = dataSlaveCell.toInt();
 
-    int Baudrate = parametersListBaudrate.at(cmbxBaudrate->currentIndex());
+    int baudrateInteger = parametersListBaudrate.at(cmbxBaudrate->currentIndex());
 
-    ui->txtbrw_logBrowser->append(QString::number(Baudrate));
+    //ui->txtbrw_logBrowser->append(QString::number(Baudrate));
 
     QModbusDataUnit writeUnit(QModbusDataUnit::HoldingRegisters, startRegisterAddress, countWriteRegister);
+
+    int baudratePart_1 = (baudrateInteger >> 16) & 0xFFFF;
+    int baudratePart_2 = baudrateInteger & 0xFFFF;
 
     if (!modbusMaster->connectDevice()){
         ui->txtbrw_logBrowser->append("Error connected! - Device not found or not connected.");
         modbusMaster->disconnectDevice();
         return;
     }
+
     writeUnit.setValue(0, slaveAddress);
-    writeUnit.setValue(1, Baudrate);
-    writeUnit.setValue(2, Baudrate);
+    writeUnit.setValue(1, baudratePart_1);
+    writeUnit.setValue(2, baudratePart_2);
 
     if (auto *reply = modbusMaster->sendWriteRequest(writeUnit, slaveAddressBits)) {
         if (!reply->isFinished()) {
