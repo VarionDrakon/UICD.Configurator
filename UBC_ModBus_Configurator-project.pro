@@ -13,8 +13,10 @@ SOURCES += \
     mainwindow.cpp
 
 HEADERS += \
+    RealWorldInterface/TimeUtils.h \
     SerialPort/ModbusCommunication.h \
-    SerialPort/ParametersConnectionModbus.h \
+    SerialPort/ModbusHandler.h \
+    UI/TableDataFiller.h \
     mainwindow.h
 
 FORMS += \

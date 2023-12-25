@@ -3,6 +3,19 @@
 
 #include <QMainWindow>
 #include <QSerialPort>
+#include <QStandardItemModel>
+#include <QSerialPortInfo>
+#include <QModbusDataUnit>
+#include <QModbusDevice>
+#include <QModbusRtuSerialMaster>
+#include <QSerialPort>
+#include <QStandardItemModel>
+#include <QTranslator>
+#include <QList>
+#include <QStyledItemDelegate>
+#include <QAbstractItemModel>
+#include <QDateTime>
+#include <QComboBox>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -15,15 +28,22 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    void UpdateListCOMPorts();
-    void LocalParametersInitilizatedOnStartup();
-    void ResponseModbusDevice();
-    void ConnectedModbusDevice();
-    void ParseModbusAnswer();
-    void ParseModbusResponse();
-    void WriteModbusDevice();
-    void ParametersModbusDevice();
-    void SetupModbusParameters();
+    void updateListCOMPorts();
+    void localParametersInitilizatedOnStartup();
+    void responseModbusDevice();
+    void modbusDataReader();
+    void modbusDataWriter();
+    void tableDataHandler();
+    void parseModbusResponse();
+    void parametersModbusDevice();
+    void setupModbusParameters();
+
+    //Create object Modbus RTU Answer
+    QList<int> *modbusRegisterAnswer = new QList<int>;
+    QList<unsigned int> *modbusParseAnswer = new QList<unsigned int>;
+    QComboBox *cmbxBaudrate;
+    //Create object Modbus RTU masters
+    QModbusRtuSerialClient *modbusMaster = new QModbusRtuSerialClient();
 
     const QList<QSerialPort::BaudRate> parametersListBaudrate = QList<QSerialPort::BaudRate>()
         << QSerialPort::Baud1200
@@ -76,6 +96,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
 
+    int indexValue = -1;
     int baudrate;
     int dataBits;
     int stopBits;

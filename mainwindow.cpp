@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "SerialPort/ModbusCommunication.h"
+#include "UI/TableDataFiller.h"
 //Libs included
 #include <QSerialPort>
 #include <QList>
@@ -14,9 +15,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     ui->txtbrw_logBrowser->setReadOnly(true);
 
-    LocalParametersInitilizatedOnStartup();
-    UpdateListCOMPorts();
-    ParseModbusAnswer();
+    localParametersInitilizatedOnStartup();
+    updateListCOMPorts();
+    tableDataHandler();
 }
 
 MainWindow::~MainWindow()
@@ -26,20 +27,20 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_btn_scaningExistSerialPorts_clicked()
 {
-    UpdateListCOMPorts();
+    updateListCOMPorts();
 }
 
 void MainWindow::on_btn_readChooserDevice_clicked()
 {
-    ConnectedModbusDevice();
+    modbusDataReader();
 }
 
 void MainWindow::on_btn_writeChooserDevice_clicked()
 {
-    WriteModbusDevice();
+    modbusDataWriter();
 }
 
-void MainWindow::LocalParametersInitilizatedOnStartup()
+void MainWindow::localParametersInitilizatedOnStartup()
 {
     for (const auto& baudrate : parametersListBaudrate)
     {
