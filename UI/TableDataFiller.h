@@ -44,6 +44,8 @@ void MainWindow::tableDataHandler(){
     QStandardItem* itemToUpdate = model->item(0);
     tableView->setItemDelegateForColumn(0, new ReadOnlyDelegate);
 
+    tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+
     model->itemChanged(itemToUpdate);
     tableView->update();
 }
