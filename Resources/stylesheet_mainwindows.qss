@@ -10,7 +10,7 @@ QMainWindow {
     background-color: rgb(28, 28, 30);
 }
 * {
-    font-size: 13px;
+    font-size: 17px;
 }
 
 QPushButton {
@@ -68,15 +68,17 @@ QTableView {
 }
 QTableView QTableCornerButton::section {
     background-color: rgb(28, 28, 30);
-    border: 0.5px solid qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop:0 rgba(0, 132, 255, 255), stop:1 rgba(48, 209, 88, 255));  
+    border: 0.5px outset qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop:0 rgba(0, 132, 255, 255), stop:1 rgba(48, 209, 88, 255));  
 }
-QHeaderView {
+QHeaderView, QHeaderView::section {
     color: rgb(197, 198, 199);
     background-color: rgb(28, 28, 30);
-    border: 1px solid qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop:0 rgba(0, 132, 255, 255), stop:1 rgba(48, 209, 88, 255));  
+    border: 0.5px outset qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop:0 rgba(0, 132, 255, 255), stop:1 rgba(48, 209, 88, 255));  
+
 }
-QHeaderView::section
+QHeaderView::section:checked
 {
-    background-color: rgb(28, 28, 30);
-    border: 0.5px inset qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop:0 rgba(0, 132, 255, 255), stop:1 rgba(48, 209, 88, 255));  
+    color: rgb(255, 214, 10);
+    background-color: rgb(44, 44, 46);
+    border: 0.5px outset qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop:0 rgba(0, 132, 255, 255), stop:1 rgba(48, 209, 88, 255));  
 }

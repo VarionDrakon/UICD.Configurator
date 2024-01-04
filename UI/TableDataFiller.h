@@ -10,20 +10,20 @@ public:
 };
 
 void MainWindow::tableDataHandler(){
-    /*
-    QStandardItemModel *model = new QStandardItemModel(0, 1, this); //create model with 0 rows, 1 column and use this class
+
+    QStandardItemModel *modelTree = new QStandardItemModel(0, 1, this); //create model with 0 rows, 1 column and use this class
     QTreeView *treeView = ui->treeView; //selected UI-object
-    QStandardItem *rootItem = model->invisibleRootItem(); //retrun invisible root element (I don`t know nahuya)
+    QStandardItem *rootItem = modelTree->invisibleRootItem(); //retrun invisible root element (I don`t know nahuya)
     treeView->setRootIsDecorated(true); //show "arrow" for elements
     treeView->setEditTriggers(QAbstractItemView::NoEditTriggers); //ban on editable elements (Nehui rename something)
-    treeView->setModel(model); //indicate use this model
+    treeView->setModel(modelTree); //indicate use this model
 
-    model->setHeaderData(0, Qt::Horizontal, "Parameters"); //Header text
+    modelTree->setHeaderData(0, Qt::Horizontal, "Parameters"); //Header text
 
-    QStandardItem *item1 = new QStandardItem(QObject::tr("File"));
-    rootItem->appendRow(item1);
+    QStandardItem *itemTree1 = new QStandardItem(QObject::tr("File"));
+    rootItem->appendRow(itemTree1);
     QStandardItem *childItem = new QStandardItem("Children elements 1");
-    item1->appendRow(childItem);*/
+    itemTree1->appendRow(childItem);
 
     QStandardItemModel* model = new QStandardItemModel(0, 2, this);
     QTableView* tableView = ui->tableView;
@@ -45,6 +45,7 @@ void MainWindow::tableDataHandler(){
     tableView->setItemDelegateForColumn(0, new ReadOnlyDelegate);
 
     tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    tableView->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
     model->itemChanged(itemToUpdate);
     tableView->update();

@@ -62,11 +62,18 @@ void MainWindow::modbusDataWriter(){
     QAbstractItemModel *qaim = tableOutputDataParse->model();
     QModelIndex indexSlaveCell = qaim->index(0, 1);
     QVariant dataSlaveCell = qaim->data(indexSlaveCell);
+
+    if(dataSlaveCell.isNull()){
+        ui->txtbrw_logBrowser->append("Nothing to write. First select Serial ports, then 'Read device', after which you can write data to device!");
+        return;
+    }
+    if(!dataSlaveCell.isValid()){
+        ui->txtbrw_logBrowser->append("Data valid?");
+        return;
+    }
+
     int slaveAddress = dataSlaveCell.toInt();
-
     int baudrateInteger = parametersListBaudrate.at(cmbxBaudrate->currentIndex());
-
-    //ui->txtbrw_logBrowser->append(QString::number(Baudrate));
 
     QModbusDataUnit writeUnit(QModbusDataUnit::HoldingRegisters, 0, 3);
 
