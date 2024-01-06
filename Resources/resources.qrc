@@ -1,5 +1,7 @@
 <RCC>
     <qresource lang="*" prefix="/qss">
-        <file>stylesheet_mainwindows.qss</file>
+        <file>darkThemeApp.qss</file>
+        <file>lightThemeApp.qss</file>
+        <file>logoOurCompany.png</file>
     </qresource>
 </RCC>

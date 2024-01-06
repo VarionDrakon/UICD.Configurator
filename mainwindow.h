@@ -3,19 +3,21 @@
 
 #include <QMainWindow>
 #include <QSerialPort>
-#include <QStandardItemModel>
 #include <QSerialPortInfo>
 #include <QModbusDataUnit>
 #include <QModbusDevice>
 #include <QModbusRtuSerialMaster>
-#include <QSerialPort>
 #include <QStandardItemModel>
 #include <QTranslator>
-#include <QList>
 #include <QStyledItemDelegate>
 #include <QAbstractItemModel>
-#include <QDateTime>
+#include <QList>
+#include <QString>
 #include <QComboBox>
+#include <QPropertyAnimation>
+#include <QGraphicsOpacityEffect>
+#include <QLabel>
+#include <QFile>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -37,7 +39,6 @@ public:
     void parseModbusResponse();
     void parametersModbusDevice();
     void setupModbusParameters();
-
     //Create object Modbus RTU Answer
     QList<int> *modbusRegisterAnswer = new QList<int>;
     QList<unsigned int> *modbusParseAnswer = new QList<unsigned int>;
@@ -71,13 +72,20 @@ public:
 
     QList<QString> serialPortParametersList;
 
+    QList<QString> listThemeApp = QList<QString>()
+        << ":/qss/darkThemeApp.qss"
+        << ":/qss/lightThemeApp.qss";
+/* Pattern for resizeEvent handler...
+protected:
+    void resizeEvent(QResizeEvent *event) override {
+        QSize newSize = event->size();
+    }
+*/
 signals:
     void cmbx_listSerialPorts_currentIndexChanged(int index);
 
 private slots:
     void on_btn_scaningExistSerialPorts_clicked();
-
-    void on_btn_readChooserDevice_clicked();
 
     void on_cmbx_listSerialPorts_currentIndexChanged(int index);
 
@@ -91,10 +99,15 @@ private slots:
 
     void on_spnbx_listSlaveID_valueChanged(int arg1);
 
+    void on_btn_readChooserDevice_clicked();
+
     void on_btn_writeChooserDevice_clicked();
+
+    void on_btnChangeTheme_clicked();
 
 private:
     Ui::MainWindow *ui;
+    QPixmap *pixmapOurLogoCompany;
 
     int indexValue = -1;
     int baudrate;
@@ -103,5 +116,6 @@ private:
     int parityBits;
     int slaveAddressBits;
     QString nameSerialPort;
+    int currentThemeApp = 0;
 };
 #endif // MAINWINDOW_H

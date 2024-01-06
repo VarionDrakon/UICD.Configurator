@@ -1,12 +1,7 @@
-#include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "SerialPort/ModbusCommunication.h"
 #include "UI/TableDataFiller.h"
 //Libs included
-#include <QSerialPort>
-#include <QList>
-#include <QString>
-#include <QComboBox>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -18,6 +13,14 @@ MainWindow::MainWindow(QWidget *parent)
     localParametersInitilizatedOnStartup();
     updateListCOMPorts();
     tableDataHandler();
+
+    pixmapOurLogoCompany = new QPixmap(":/qss/logoOurCompany.png");
+
+    ui->lblImageOurCompany->setFixedSize(QSize(400, 150));
+
+    ui->lblImageOurCompany->setPixmap(pixmapOurLogoCompany->scaled(ui->lblImageOurCompany->size(), Qt::KeepAspectRatio));
+
+    ui->lblImageOurCompany->setScaledContents(true);
 }
 
 MainWindow::~MainWindow()
@@ -107,3 +110,40 @@ void MainWindow::on_spnbx_listSlaveID_valueChanged(int arg1)
     slaveAddressBits = arg1;
     //ui->txtbrw_logBrowser->append("Current slave address: " + QString::number(arg1));
 }
+
+void MainWindow::on_btnChangeTheme_clicked()
+{
+    currentThemeApp++;
+    if(currentThemeApp >= listThemeApp.size()){
+        currentThemeApp = 0;
+    }
+
+    QList<QWidget *> widgets = qApp->allWidgets();
+    QFile file(listThemeApp.at(currentThemeApp));
+
+    file.open(QFile::ReadOnly | QFile::Text);
+    QString styleSheet = file.readAll();
+    file.close();
+
+    foreach (QWidget *widget, widgets) {
+        QGraphicsOpacityEffect* opacityEffect = new QGraphicsOpacityEffect(widget);
+        widget->setGraphicsEffect(opacityEffect);
+
+        QPropertyAnimation* animationDisappearance = new QPropertyAnimation(opacityEffect, "opacity");
+        animationDisappearance->setDuration(1000);
+        animationDisappearance->setStartValue(1.0);
+        animationDisappearance->setEndValue(0.0);
+
+        QPropertyAnimation* animationAppearance = new QPropertyAnimation(opacityEffect, "opacity");
+        animationAppearance->setDuration(1000);
+        animationAppearance->setStartValue(0.0);
+        animationAppearance->setEndValue(1.0);
+
+        connect(animationDisappearance, &QPropertyAnimation::finished, [=](){
+            qApp->setStyleSheet(styleSheet);
+            animationAppearance->start();
+        });
+        animationDisappearance->start();
+    }
+}
+

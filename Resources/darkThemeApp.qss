@@ -1,0 +1,35 @@
+* {
+    color: rgb(197, 198, 199);
+    font-size: 17px;
+    background-color: rgb(28, 28, 30);
+    selection-background-color: rgb(62, 62, 66);
+    border: 1px solid qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop:0 rgba(0, 132, 255, 255), stop:1 rgba(48, 209, 88, 255));       
+    border-radius: 4px;
+}
+
+QComboBox::drop-down 
+{
+    color: rgb(102, 252, 241);
+    background-color: rgb(102, 252, 241);
+}
+
+QTableView {
+    gridline-color: #5E5CE6; 
+}
+
+QTableView QTableCornerButton::section {
+    border: 0.5px outset qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop:0 rgba(0, 132, 255, 255), stop:1 rgba(48, 209, 88, 255));
+    background-color: rgb(28, 28, 30);
+}
+
+QHeaderView, QHeaderView::section {
+    border: 0.5px outset qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop:0 rgba(0, 132, 255, 255), stop:1 rgba(48, 209, 88, 255));
+    background-color: rgb(28, 28, 30);
+}
+
+QHeaderView::section:checked
+{
+    color: rgb(255, 214, 10);
+    background-color: rgb(44, 44, 46);
+    border: 0.5px outset qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop:0 rgba(0, 132, 255, 255), stop:1 rgba(48, 209, 88, 255));  
+}

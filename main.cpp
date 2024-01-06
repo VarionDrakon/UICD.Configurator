@@ -1,3 +1,4 @@
+//#include "UI/testResizeItems.h"
 #include "mainwindow.h"
 //Includes files from lib`s
 #include <QApplication>
@@ -8,7 +9,7 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    QFile styleFile( ":qss/stylesheet_mainwindows.qss" );
+    QFile styleFile( ":/qss/darkThemeApp.qss" );
     styleFile.open( QFile::ReadOnly );
     a.setStyleSheet( QString::fromLatin1( styleFile.readAll() ) );
     styleFile.close();
@@ -22,6 +23,12 @@ int main(int argc, char *argv[])
         }
     }
     MainWindow w;
+    /*ScribbleArea* scribbleArea = new ScribbleArea();
+    QPixmap pix(":/qss/logoOurCompany.png");
+    scribbleArea->setPixmap(pix);
+    scribbleArea->setOriginalPixmapSize(pix.size());
+    scribbleArea->show();
+*/
     w.show();
     return a.exec();
 }
