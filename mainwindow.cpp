@@ -14,13 +14,17 @@ MainWindow::MainWindow(QWidget *parent)
     updateListCOMPorts();
     tableDataHandler();
 
-    pixmapOurLogoCompany = new QPixmap(":/qss/logoOurCompany.png");
-
-    ui->lblImageOurCompany->setFixedSize(QSize(400, 150));
-
+    pixmapOurLogoCompany = new QPixmap(":/img/logoOurCompany.png");
+    ui->lblImageOurCompany->setFixedSize(QSize(350, 100));
     ui->lblImageOurCompany->setPixmap(pixmapOurLogoCompany->scaled(ui->lblImageOurCompany->size(), Qt::KeepAspectRatio));
-
     ui->lblImageOurCompany->setScaledContents(true);
+
+    QIcon iconResChangeTheme(":/img/changeThemeIcon.png");
+
+    ui->btnChangeTheme->setIcon(iconResChangeTheme);
+    ui->btnChangeTheme->setFixedSize(100, 100);
+    ui->btnChangeTheme->setIconSize(ui->btnChangeTheme->size() - QSize(10, 10));
+    ui->btnChangeTheme->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 }
 
 MainWindow::~MainWindow()
@@ -145,5 +149,17 @@ void MainWindow::on_btnChangeTheme_clicked()
         });
         animationDisappearance->start();
     }
+}
+
+
+void MainWindow::on_btnOpenWebCompany_clicked()
+{
+    QDesktopServices::openUrl(QUrl("https://www.centrikt.ru"));
+}
+
+
+void MainWindow::on_btnOpenWebRepository_clicked()
+{
+    QDesktopServices::openUrl(QUrl("https://github.com/VarionDrakon/QT_ModBus-Configurator"));
 }
 

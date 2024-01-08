@@ -1,18 +1,15 @@
-//#include "UI/testResizeItems.h"
 #include "mainwindow.h"
-//Includes files from lib`s
-#include <QApplication>
-#include <QLocale>
-#include <QTranslator>
-#include <QFile>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    QFile styleFile( ":/qss/darkThemeApp.qss" );
+    MainWindow w;
+    QSplashScreen splashScreen(QPixmap(":/img/spashScreenlogoOurCompany.png"));
+    QFile styleFile( ":/qss/lightThemeApp.qss" );
     styleFile.open( QFile::ReadOnly );
     a.setStyleSheet( QString::fromLatin1( styleFile.readAll() ) );
     styleFile.close();
+    /*
     QTranslator translator;
     const QStringList uiLanguages = QLocale::system().uiLanguages();
     for (const QString &locale : uiLanguages) {
@@ -21,14 +18,14 @@ int main(int argc, char *argv[])
             a.installTranslator(&translator);
             break;
         }
-    }
-    MainWindow w;
-    /*ScribbleArea* scribbleArea = new ScribbleArea();
-    QPixmap pix(":/qss/logoOurCompany.png");
-    scribbleArea->setPixmap(pix);
-    scribbleArea->setOriginalPixmapSize(pix.size());
-    scribbleArea->show();
-*/
-    w.show();
+    }*/
+    splashScreen.show();
+    QTimer timer;
+    timer.setInterval(2000);
+    QObject::connect(&timer, &QTimer::timeout, [&](){
+        splashScreen.close();
+        w.show();
+    });
+    timer.start();
     return a.exec();
 }

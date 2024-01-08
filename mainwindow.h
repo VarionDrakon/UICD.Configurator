@@ -18,6 +18,12 @@
 #include <QGraphicsOpacityEffect>
 #include <QLabel>
 #include <QFile>
+#include <QIcon>
+#include <QDesktopServices>
+#include <QSplashScreen>
+#include <QApplication>
+#include <QTimer>
+#include <QParallelAnimationGroup>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -105,6 +111,10 @@ private slots:
 
     void on_btnChangeTheme_clicked();
 
+    void on_btnOpenWebCompany_clicked();
+
+    void on_btnOpenWebRepository_clicked();
+
 private:
     Ui::MainWindow *ui;
     QPixmap *pixmapOurLogoCompany;
@@ -116,6 +126,6 @@ private:
     int parityBits;
     int slaveAddressBits;
     QString nameSerialPort;
-    int currentThemeApp = 0;
+    int currentThemeApp = 1;
 };
 #endif // MAINWINDOW_H

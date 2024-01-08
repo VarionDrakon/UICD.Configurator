@@ -2,6 +2,10 @@
     <qresource lang="*" prefix="/qss">
         <file>darkThemeApp.qss</file>
         <file>lightThemeApp.qss</file>
+    </qresource>
+    <qresource prefix="/img">
+        <file>changeThemeIcon.png</file>
         <file>logoOurCompany.png</file>
+        <file>spashScreenlogoOurCompany.png</file>
     </qresource>
 </RCC>

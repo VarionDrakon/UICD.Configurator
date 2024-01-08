@@ -17,7 +17,6 @@ HEADERS += \
     SerialPort/ModbusCommunication.h \
     SerialPort/ModbusHandler.h \
     UI/TableDataFiller.h \
-    UI/testResizeItems.h \
     mainwindow.h
 
 FORMS += \
