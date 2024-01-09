@@ -8,8 +8,8 @@ void MainWindow::setupModbusParameters(){
     modbusMaster->setConnectionParameter(QModbusDevice::SerialDataBitsParameter, dataBits);
     modbusMaster->setConnectionParameter(QModbusDevice::SerialStopBitsParameter, stopBits);
     modbusMaster->setConnectionParameter(QModbusDevice::SerialParityParameter, parityBits);
-    modbusMaster->setTimeout(100);
     modbusMaster->setNumberOfRetries(3);
+    modbusMaster->setTimeout(100);
 }
 
 void MainWindow::parseModbusResponse(){

@@ -15,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent)
     tableDataHandler();
 
     pixmapOurLogoCompany = new QPixmap(":/img/logoOurCompany.png");
-    ui->lblImageOurCompany->setFixedSize(QSize(350, 100));
+    ui->lblImageOurCompany->setFixedSize(QSize(432, 110));
     ui->lblImageOurCompany->setPixmap(pixmapOurLogoCompany->scaled(ui->lblImageOurCompany->size(), Qt::KeepAspectRatio));
     ui->lblImageOurCompany->setScaledContents(true);
 
@@ -122,15 +122,16 @@ void MainWindow::on_btnChangeTheme_clicked()
         currentThemeApp = 0;
     }
 
-    QList<QWidget *> widgets = qApp->allWidgets();
+    QList<QWidget*> widgets = qApp->allWidgets();
     QFile file(listThemeApp.at(currentThemeApp));
+    QGraphicsOpacityEffect* opacityEffect = nullptr;
 
     file.open(QFile::ReadOnly | QFile::Text);
     QString styleSheet = file.readAll();
     file.close();
 
     foreach (QWidget *widget, widgets) {
-        QGraphicsOpacityEffect* opacityEffect = new QGraphicsOpacityEffect(widget);
+        opacityEffect = new QGraphicsOpacityEffect(widget);
         widget->setGraphicsEffect(opacityEffect);
 
         QPropertyAnimation* animationDisappearance = new QPropertyAnimation(opacityEffect, "opacity");
@@ -147,10 +148,15 @@ void MainWindow::on_btnChangeTheme_clicked()
             qApp->setStyleSheet(styleSheet);
             animationAppearance->start();
         });
+        connect(animationAppearance, &QPropertyAnimation::finished, [=](){
+            opacityEffect->deleteLater();
+            animationAppearance->deleteLater();
+            animationDisappearance->deleteLater();
+        });
+
         animationDisappearance->start();
     }
 }
-
 
 void MainWindow::on_btnOpenWebCompany_clicked()
 {

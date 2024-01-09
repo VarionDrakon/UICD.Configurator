@@ -17,6 +17,11 @@ QTableView {
     gridline-color: #5E5CE6; 
 }
 
+QTableView::item:selected {
+    color: rgb(70, 70, 70);
+    background-color: rgb(193, 193, 207);
+}
+
 QTableView QTableCornerButton::section {
     border: 0.5px outset qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop:0 rgba(0, 132, 255, 255), stop:1 rgba(48, 209, 88, 255));
     background-color: rgb(242, 242, 247);

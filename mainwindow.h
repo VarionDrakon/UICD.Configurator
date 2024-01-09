@@ -20,10 +20,8 @@
 #include <QFile>
 #include <QIcon>
 #include <QDesktopServices>
-#include <QSplashScreen>
 #include <QApplication>
 #include <QTimer>
-#include <QParallelAnimationGroup>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

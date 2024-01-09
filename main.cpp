@@ -1,11 +1,13 @@
 #include "mainwindow.h"
+#include "UI/CustomSplashScreen.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     MainWindow w;
-    QSplashScreen splashScreen(QPixmap(":/img/spashScreenlogoOurCompany.png"));
+    CustomSplashScreen splashScreen(QPixmap(":/img/spashScreenlogoOurCompany.png"));
     QFile styleFile( ":/qss/lightThemeApp.qss" );
+
     styleFile.open( QFile::ReadOnly );
     a.setStyleSheet( QString::fromLatin1( styleFile.readAll() ) );
     styleFile.close();
@@ -24,7 +26,8 @@ int main(int argc, char *argv[])
     timer.setInterval(2000);
     QObject::connect(&timer, &QTimer::timeout, [&](){
         splashScreen.close();
-        w.show();
+        w.showMaximized();
+        timer.stop();
     });
     timer.start();
     return a.exec();

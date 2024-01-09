@@ -16,6 +16,7 @@ HEADERS += \
     RealWorldInterface/TimeUtils.h \
     SerialPort/ModbusCommunication.h \
     SerialPort/ModbusHandler.h \
+    UI/CustomSplashScreen.h \
     UI/TableDataFiller.h \
     mainwindow.h
 
