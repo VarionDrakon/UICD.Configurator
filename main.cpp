@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
     styleFile.open( QFile::ReadOnly );
     a.setStyleSheet( QString::fromLatin1( styleFile.readAll() ) );
     styleFile.close();
-    /*
+
     QTranslator translator;
     const QStringList uiLanguages = QLocale::system().uiLanguages();
     for (const QString &locale : uiLanguages) {
@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
             a.installTranslator(&translator);
             break;
         }
-    }*/
+    }
     splashScreen.show();
     QTimer timer;
     timer.setInterval(2000);

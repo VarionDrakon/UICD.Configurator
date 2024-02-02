@@ -43,6 +43,8 @@ public:
     void parseModbusResponse();
     void parametersModbusDevice();
     void setupModbusParameters();
+    void changeThemeApp();
+    void resourceThemeApp();
     //Create object Modbus RTU Answer
     QList<int> *modbusRegisterAnswer = new QList<int>;
     QList<unsigned int> *modbusParseAnswer = new QList<unsigned int>;

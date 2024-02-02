@@ -18,6 +18,7 @@ HEADERS += \
     SerialPort/ModbusHandler.h \
     UI/CustomSplashScreen.h \
     UI/TableDataFiller.h \
+    UI/ThemeApp.h \
     mainwindow.h
 
 FORMS += \

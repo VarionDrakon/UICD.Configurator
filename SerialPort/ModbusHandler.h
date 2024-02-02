@@ -67,6 +67,9 @@ void MainWindow::responseModbusDevice(){
             indexValue = i;
             break;
         }
+        else {
+            indexValue = -1;
+        }
     }
     cmbxBaudrate->setCurrentIndex(indexValue);
     tableOutputDataParse->setIndexWidget(tableOutputDataParse->model()->index(1, 1), cmbxBaudrate);

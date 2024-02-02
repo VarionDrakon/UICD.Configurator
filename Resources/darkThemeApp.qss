@@ -9,8 +9,8 @@
 
 QComboBox::drop-down 
 {
-    color: rgb(102, 252, 241);
-    background-color: rgb(102, 252, 241);
+    color: rgb(100, 200, 250);
+    background-color: rgb(100, 200, 250);
 }
 
 QTableView {
