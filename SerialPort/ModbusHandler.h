@@ -18,6 +18,7 @@ void MainWindow::parseModbusResponse(){
     modbusParseAnswer->fill(0);
 
     modbusParseAnswer->replace(0, modbusRegisterAnswer->at(0));
+    ui->txtbrw_logBrowser->append(nameSerialPort);
 
     unsigned int baudrate = modbusRegisterAnswer->at(1);
     baudrate = (baudrate << 16) |  modbusRegisterAnswer->at(2);

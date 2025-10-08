@@ -1,4 +1,4 @@
-QT       += core gui serialport serialbus
+QT += core gui serialport serialbus
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -35,6 +35,11 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 RESOURCES += \
-    Resources/Resources.qrc
+    Resources/resources.qrc
 
-DISTFILES +=
+DISTFILES += \
+    Resources/changeThemeIcon.png \
+    Resources/darkThemeApp.qss \
+    Resources/lightThemeApp.qss \
+    Resources/logoOurCompany.png \
+    Resources/spashScreenlogoOurCompany.png

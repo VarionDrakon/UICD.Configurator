@@ -115,6 +115,8 @@ private slots:
 
     void on_btnOpenWebRepository_clicked();
 
+    void on_rdbtn_cyclingPolling_toggled(bool checked);
+
 private:
     Ui::MainWindow *ui;
     QPixmap *pixmapOurLogoCompany;

@@ -1,5 +1,5 @@
 #include "ui_mainwindow.h"
-#include <Ui/ThemeApp.h>
+#include "../UICD.Configurator-main/UI/ThemeApp.h"
 #include "SerialPort/ModbusCommunication.h"
 #include "UI/TableDataFiller.h"
 //Libs included
@@ -103,6 +103,24 @@ void MainWindow::on_spnbx_listSlaveID_valueChanged(int arg1)
 {
     slaveAddressBits = arg1;
     //ui->txtbrw_logBrowser->append("Current slave address: " + QString::number(arg1));
+}
+
+void MainWindow::on_rdbtn_cyclingPolling_toggled(bool checked)
+{
+    static QTimer* pollTimer = nullptr;
+
+    if (checked) {
+        if (!pollTimer) {
+            pollTimer = new QTimer(this);
+            connect(pollTimer, &QTimer::timeout, this, &MainWindow::modbusDataReader);
+        }
+        pollTimer->start(300);
+    } else {
+        if (pollTimer) {
+            pollTimer->stop();
+        }
+    }
+
 }
 
 void MainWindow::on_btnChangeTheme_clicked()
