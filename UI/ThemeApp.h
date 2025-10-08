@@ -1,7 +1,7 @@
 #ifndef THEMEAPP_H
 #define THEMEAPP_H
 
-#include <mainwindow.h>
+#include "../mainwindow.h"
 #include <ui_mainwindow.h>
 
 void MainWindow::changeThemeApp() {

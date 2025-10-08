@@ -1,6 +1,6 @@
-#include "mainwindow.h"
+#include "../mainwindow.h"
 #include "ui_mainwindow.h"
-#include "RealWorldInterface/TimeUtils.h"
+#include "../RealWorldInterface/TimeUtils.h"
 
 void MainWindow::setupModbusParameters(){
     modbusMaster->setConnectionParameter(QModbusDevice::SerialPortNameParameter, nameSerialPort);

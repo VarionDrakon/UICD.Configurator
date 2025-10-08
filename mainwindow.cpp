@@ -1,5 +1,5 @@
 #include "ui_mainwindow.h"
-#include "../UICD.Configurator-main/UI/ThemeApp.h"
+#include "UI/ThemeApp.h"
 #include "SerialPort/ModbusCommunication.h"
 #include "UI/TableDataFiller.h"
 //Libs included
