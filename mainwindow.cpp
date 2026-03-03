@@ -120,7 +120,6 @@ void MainWindow::on_rdbtn_cyclingPolling_toggled(bool checked)
             pollTimer->stop();
         }
     }
-
 }
 
 void MainWindow::on_btnChangeTheme_clicked()

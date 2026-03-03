@@ -51,7 +51,7 @@ void MainWindow::responseModbusDevice(){
 
     for (int row = 0; row < qaim->rowCount(); row++) {
         QModelIndex index = qaim->index(row, 1);
-        qaim->setData(index, modbusParseAnswer->at(row), Qt::EditRole);
+        qaim->setData(index, qulonglong(modbusParseAnswer->at(row)), Qt::EditRole);
         //ui->txtbrw_logBrowser->append("Success!");
     }
 

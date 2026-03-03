@@ -60,29 +60,53 @@ void MainWindow::modbusDataWriter(){
 
     auto *tableOutputDataParse = ui->tableView;
     QAbstractItemModel *qaim = tableOutputDataParse->model();
-    QModelIndex indexSlaveCell = qaim->index(0, 1);
-    QVariant dataSlaveCell = qaim->data(indexSlaveCell);
 
-    if(dataSlaveCell.isNull()){
+    QModelIndex indexdataSlaveAddress = qaim->index(0, 1);
+    QModelIndex indexTotalize1 = qaim->index(2, 1);
+    QModelIndex indexTotalize2 = qaim->index(3, 1);
+    QModelIndex indexTotalize3 = qaim->index(4, 1);
+    QVariant dataSlaveAddress = qaim->data(indexdataSlaveAddress);
+    QVariant dataTotalize1 = qaim->data(indexTotalize1);
+    QVariant dataTotalize2 = qaim->data(indexTotalize2);
+    QVariant dataTotalize3 = qaim->data(indexTotalize3);
+
+    if(dataSlaveAddress.isNull() || dataTotalize1.isNull() || dataTotalize2.isNull() || dataTotalize3.isNull()){
         ui->txtbrw_logBrowser->append("Nothing to write. First select Serial ports, then 'Read device', after which you can write data to device!");
         return;
     }
-    if(!dataSlaveCell.isValid()){
-        ui->txtbrw_logBrowser->append("Data valid?");
+    if(!dataSlaveAddress.isValid() || !dataTotalize1.isValid() || !dataTotalize2.isValid() || !dataTotalize3.isValid()){
+        ui->txtbrw_logBrowser->append("Data valid?" + dataSlaveAddress.toString() + dataTotalize1.toString() + dataTotalize2.toString() + dataTotalize3.toString());
         return;
     }
 
-    int slaveAddress = dataSlaveCell.toInt();
+    QModbusDataUnit writeUnit(QModbusDataUnit::HoldingRegisters, 0, 9);
+
+    int slaveAddress = dataSlaveAddress.toInt();
+    writeUnit.setValue(0, slaveAddress);
+
     int baudrateInteger = parametersListBaudrate.at(cmbxBaudrate->currentIndex());
-
-    QModbusDataUnit writeUnit(QModbusDataUnit::HoldingRegisters, 0, 3);
-
     int baudratePart_1 = (baudrateInteger >> 16) & 0xFFFF;
     int baudratePart_2 = baudrateInteger & 0xFFFF;
-
-    writeUnit.setValue(0, slaveAddress);
     writeUnit.setValue(1, baudratePart_1);
     writeUnit.setValue(2, baudratePart_2);
+
+    qlonglong totalize1 = dataTotalize1.toULongLong();
+    int totalize1Part_1 = (totalize1 >> 16) & 0xFFFF;
+    int totalize1Part_2 = totalize1 & 0xFFFF;
+    writeUnit.setValue(3, totalize1Part_1);
+    writeUnit.setValue(4, totalize1Part_2);
+
+    qlonglong totalize2 = dataTotalize2.toULongLong();
+    int totalize2Part_1 = (totalize2 >> 16) & 0xFFFF;
+    int totalize2Part_2 = totalize2 & 0xFFFF;
+    writeUnit.setValue(5, totalize2Part_1);
+    writeUnit.setValue(6, totalize2Part_2);
+
+    qlonglong totalize3 = dataTotalize3.toULongLong();
+    int totalize3Part_1 = (totalize3 >> 16) & 0xFFFF;
+    int totalize3Part_2 = totalize3 & 0xFFFF;
+    writeUnit.setValue(7, totalize3Part_1);
+    writeUnit.setValue(8, totalize3Part_2);
 
     if (!modbusMaster->connectDevice()){
         ui->txtbrw_logBrowser->append("Error connected! - Device not found or not connected.");
