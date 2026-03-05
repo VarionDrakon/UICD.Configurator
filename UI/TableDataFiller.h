@@ -12,11 +12,11 @@ public:
 void MainWindow::tableDataHandler(){
 
     QStandardItemModel *modelTree = new QStandardItemModel(0, 1, this); //create model with 0 rows, 1 column and use this class
-    QTreeView *treeView = ui->treeView; //selected UI-object
+    // QTreeView *treeView = ui->treeView; //selected UI-object
     QStandardItem *rootItem = modelTree->invisibleRootItem(); //retrun invisible root element (I don`t know nahuya)
-    treeView->setRootIsDecorated(true); //show "arrow" for elements
-    treeView->setEditTriggers(QAbstractItemView::NoEditTriggers); //ban on editable elements (Nehui rename something)
-    treeView->setModel(modelTree); //indicate use this model
+    // treeView->setRootIsDecorated(true); //show "arrow" for elements
+    // treeView->setEditTriggers(QAbstractItemView::NoEditTriggers); //ban on editable elements (Nehui rename something)
+    // treeView->setModel(modelTree); //indicate use this model
 
     modelTree->setHeaderData(0, Qt::Horizontal, "Parameters"); //Header text
 
